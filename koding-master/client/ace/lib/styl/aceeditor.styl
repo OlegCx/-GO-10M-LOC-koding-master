@@ -1,0 +1,494 @@
+@css {
+/*
+ACE STYLES
+app.aceeditor.styl
+*/
+}
+
+panel-find-replace-bg           = #000000
+panel-find-replace-border       = #232327
+
+input-bg                        = #333339
+input-border                    = #515151
+input-active-border             = #A8CEFF
+input-placeholder               = #989898
+input-color                     = #FFFFFF
+btn-color                       = #919191
+btn-hover-bg                    = #67A2EE
+btn-hover-color                 = #FFFFFF
+
+
+#kdmaincontainer.fullscreen
+  .ace .application-page
+    aside
+      kalc                  height, 100%
+      top                   0
+
+
+.ace .application-page
+
+  aside
+    size                  247px 100%
+    bg                    color #252E30
+    top                   0
+    left                  0
+    padding               3px
+    abs()
+    borderBox()
+    .file-container
+      bg                  color, #282f31
+
+  section
+    height                100%
+    kalc                  width, 100% \- 247px
+    margin-left           247px
+
+
+
+// OLD STYLES
+// BURAK CLEANUP PLEASE
+body.ace
+  .ace_editor
+    size                    100%, 100%
+
+  .ace_gutter
+    .ace_gutter-cell.ace_error
+      bg                    image, url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NTdBRDIwREZBMkU1MTFFMUE5MTFEOEE4OEQ1MUI3NjgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NTdBRDIwRTBBMkU1MTFFMUE5MTFEOEE4OEQ1MUI3NjgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1N0FEMjBEREEyRTUxMUUxQTkxMUQ4QTg4RDUxQjc2OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo1N0FEMjBERUEyRTUxMUUxQTkxMUQ4QTg4RDUxQjc2OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Ph9XQI4AAAEYSURBVHjaYvz//z8DDDxRYXUDUiCsAcQ3gHiXzJ3fu2DyjCDFQEVcQPY8IA5nwAQrgTgJqOkbE1RgMUghh4MnUDsjXBWYDzFgMVjgsTKLCxD/fxXl/B8Eviyf/f+xGvv/z4umgvmv4z3+g+RB6kCK+0CcJ7oC/z/N7AYr+HXrKpj+NLcfLA5V3McIJNYALQiGWS2x+xoDi6Iqw58nDxheOKgiu30tyM2PwT7l5mXgr+wCK/x98woDi4wCg0BNH1gcCh6DnOGG7ObPS2b8f6zC+v/z/EnobnaDBd06oM5ADls3hh+HdyFCw86d4cehnSDmemDQBcEUcwMF5gNxKJZwBvkpAaj4KyOWGPQFYlsgPgzEm5FjECDAADkAmrsoFWqHAAAAAElFTkSuQmCC")
+    .ace_gutter-cell.ace_warning
+      bg                    image, url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAALCAYAAABLcGxfAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NTdBRDIwREJBMkU1MTFFMUE5MTFEOEE4OEQ1MUI3NjgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NTdBRDIwRENBMkU1MTFFMUE5MTFEOEE4OEQ1MUI3NjgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1N0FEMjBEOUEyRTUxMUUxQTkxMUQ4QTg4RDUxQjc2OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo1N0FEMjBEQUEyRTUxMUUxQTkxMUQ4QTg4RDUxQjc2OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pu5I9lIAAADBSURBVHjaYvz//z8DBpjM2AkkmRly/5egSzFiaJjMGAIkV0N5EUBNK3FrmMwoCCSPAbEiEP8D4kdAbAXU9A6mhAnNxgQg1gAqYAdiTiBbHYhTkRUwIZkuCyQLMD3EkAeUk8NmQx0Qy2HRIAXEDagaJjM6Q52DC8RC1TCwIJnOguQ8dA0guXog3sv4fxJDNJCxBEU69z8ujbEgnR5YIu4KkPwFxEZoMl4gDc1AzAoOb4giUPgLQ/13G0qzQeOnESDAADgWL1D1Oi1VAAAAAElFTkSuQmCC")
+
+  .kdnotification.editor.mini
+    shadow                  0 1px 3px rgba(0, 0, 0, 0.3)
+    rounded                 2px
+    margin-top              15px
+    .kdnotification-title
+      text-shadow           none
+      font-size             10px
+      line-height           10px
+      padding               0 10px
+
+
+  .kdtabhandle
+    .inactive
+      color                 rgba(255,255,255,0.85)
+      text-shadow           0 -1px 0 rgba(0,0,0,.61)
+      bg                    color,rgba(255,255,255,.2)
+      span.close-tab
+        bg                  color,transparent
+
+  .save-file-container
+    bg                      color, #eee
+    borderBox()
+    &.save-as-dialog
+      border                1px solid #bbb
+
+  .save-as-dialog
+    .kddialog-buttons
+      height                65px !important
+    .kddialog-wrapper
+      margin-bottom         80px !important
+    button
+      margin                10px 10px 0 0 !important
+      &:first-child
+        margin-right        20px !important
+
+  .editor-main
+    bg                      color, #161616
+    .code-wrapper
+      size(100%,100%)
+      .ace_scroller
+        overflow-x          none
+        cursor              text
+
+    .ace_content
+      cursor                text
+
+    &.not-editable
+      .ace_cursor.ace_hidden
+        display             none
+
+  .editor-bottom-bar
+    bg                      color, #252E30
+    color                   #5e7074
+    size                    100% 20px
+    z-index                 1000
+    borderBox()
+    abs()
+    &.clearfix
+      bottom                0
+
+    .section
+      padding               3px
+      font-size             10px
+      line-height           12px
+      color                 #5e7074
+      size                  auto 12px
+      fl()
+      &.caret-position
+        width               48px
+        text-align          center
+        color               #5e7074
+        margin              0
+        span
+          margin            0 2px
+
+  .terminal-tab
+    border                  1px solid #ddd
+    borderBox()
+
+    input.kdinput.text
+      color                 #28fe14
+      font-family           mono
+      border                none
+      display               block
+      line-height           initial
+      rounded               0
+      size                  100%, initial
+      shadow                none
+      bg                    color, transparent
+
+    .anyterm-screen
+      size                  100%, 100%
+      padding               2px
+      margin                0
+      color                 #28fe14
+      bg                    color, #111
+      bg                    image, url("/a/images/gterminal.png")
+      bg                    repeat, no-repeat
+      bg                    size, cover
+      borderBox()
+      span.cursor
+        bg                  color, transparent
+        border              1px solid #b4b4b4
+
+    &.terminal-on-focus
+      span.cursor
+        border              0
+        margin              0
+        bg                  color,transparent
+        bg                  image,url("/a/images/blinking-cursor.gif")
+        bg                  repeat,no-repeat
+
+  .kdmodal.key-bindings
+    table
+      size                  100%, auto
+      margin                0
+      font-size             14px
+      borderBox()
+      fl()
+
+      &~table
+        padding             0 0 0 12px
+        border-left         1px solid #dedede
+
+      thead
+        font-weight         500
+
+        th
+          padding           8px 6px
+
+      tr
+        line-height         18px
+        border-bottom       1px solid #dedede
+
+        td
+          padding           8px 6px
+          min-width         140px
+
+          ~td
+            border-left     1px solid #dfdfdf
+
+        &:nth-child(2n)
+          background        #f7f7f7
+
+.ace_editor.ace_autocomplete
+  border                    none !important
+  background                #000 !important
+
+  .ace_text-layer
+    padding      0
+
+  .ace_marker-layer
+    hidden()
+
+  .ace_line
+    height       26px
+    color        white
+    background   #121212
+    padding-left 12px
+
+    &.ace_selected
+      background #202020
+
+    .ace_rightAlignedText
+      right      12px
+      color      #A2A2A2
+      z-index    1
+
+    .ace_completion-highlight
+      color      lightblue
+
+
+.ace_doc-tooltip
+  background                #222        !important
+  color                     #999        !important
+  font-size                 11px        !important
+  word-wrap                 break-word  !important
+  max-width                 500px       !important
+  white-space               pre-wrap    !important
+  word-break                break-all   !important
+  hr
+    border                  1px solid
+    border-bottom           none
+  b
+    font-weight             bold
+
+
+btn-transition()
+  -webkit-transition                all .1s ease
+  -moz-transition                   all .1s ease
+  transition                        all .1s ease
+
+btn-icon-before-after()
+  content                           ''
+  position                          absolute
+  width                             100%
+  height                            100%
+  top                               0
+  left                              0
+  bg                                color, btn-color
+  btn-transition()
+
+.search-view
+  display                           flex
+  flex-direction                    row
+  align-items                       flex-start
+  justify-content                   space-between
+  min-height                        50px
+  bottom                            40px
+  bg                                color, panel-find-replace-bg
+  z-index                           10001 // to make it bigger than fullscreen ide panes
+  padding                           10px 15px 0
+  border-bottom                     2px solid panel-find-replace-border
+  height                            auto
+  overflow                          hidden
+  borderBox()
+  abs()
+
+  a, input, button
+    height                          30px
+    bg                              color, input-bg
+    font-size                       13px
+    outline                         none
+    shadow                          none
+    border                          none
+    rounded                         4px
+    btn-transition()
+
+  a,
+  button
+    &:hover
+      bg                            color, btn-hover-bg !important
+      color                         btn-hover-color !important
+      border                        none
+
+    &:focus
+      border                        none
+      shadow                        none
+
+  .search-options-button-group
+    display                         inline-flex
+    margin-bottom                   10px
+
+    .multiple-choice
+      display                       inline-flex
+      position                      relative
+
+      a
+        position                    relative
+        cursor                      pointer
+        size                        30px, 30px
+        background                  transparent
+        bg                          color, transparent
+        border                      none
+        text-indent                 -10000px
+        shadow                      none
+        rounded                     4px
+        borderBox()
+        btn-transition()
+
+        &:before
+          btn-icon-before-after()
+
+        &:hover:before,
+        &.active:hover:before
+          bg                        color, btn-hover-color
+
+        &.active:before
+          bg                        color, btn-hover-bg
+
+        &.multiple-choice-case-sensitive:before
+          mask-sprite               ace 'search_case'
+        &.multiple-choice-regex:before
+          mask-sprite               ace 'search_regex'
+        &.multiple-choice-whole-word:before
+          mask-sprite               ace 'search_whole'
+
+  .search-inputs
+    display                         inline-flex
+    flex                            1
+    margin-right                    10px
+    flex-wrap                       wrap
+
+    .search-input,
+    .search-input-with-icon
+      height                        30px
+      padding                       0 13px
+      font-size                     12px
+      line-height                   30px
+      rounded                       4px
+      color                         input-color
+      bg                            color, input-bg
+      bg                            image, none
+      bg                            position, center right 10px
+      bg                            repeat, no-repeat
+      border                        1px solid input-border
+      placeholder-color             input-placeholder
+      borderBox()
+
+      &.search-input-with-icon
+        s-sprite                      ace 'search_icon'
+
+      &:hover,
+      &:focus
+        border-color                input-active-border
+        shadow                      none
+
+      &:focus
+        s-sprite                    ace 'search_enter'
+
+    .search-input-wrapper
+      display                       inline-flex
+      flex-direction                row
+      min-width                     245px
+      flex                          1
+      margin-left                   10px
+      margin-bottom                 10px
+
+    .search-input-group
+
+      .search-input,
+      .search-input-with-icon
+        margin-right                1px
+        rounded                     4px 0 0 4px
+
+      .find-button
+        size                        30px, 30px
+        bg                          color, input-bg
+
+        &:before
+          content                   ''
+          position                  absolute
+          width                     100%
+          height                    100%
+          top                       0
+          left                      0
+          bg                        color, btn-color
+          btn-transition()
+
+        &:hover:before,
+        &.active:hover:before
+          bg                        color, #ffffff
+
+        &.active:before
+          bg                        color, btn-hover-bg
+
+        &.find-next
+          rounded                   0
+          margin-right              1px
+
+          &:before
+            mask-sprite             ace 'arrow_down'
+
+        &.find-prev
+          rounded                   0 4px 4px 0
+
+          &:before
+            mask-sprite             ace 'arrow_up'
+
+    .search-replace-wrapper
+      display                       none
+
+  .search-buttons
+    margin-left                     10px
+    margin-bottom                   10px
+
+    .search-button
+      padding                       6px 17px 8px
+      color                         input-color
+      font-weight                   500
+      btn-transition()
+      borderBox()
+
+    &.search-replace-button-group
+      display                       none
+
+    &.search-button-group
+      .search-button
+        &.search-button-replace:first-of-type
+          rounded                     4px 0 0 4px
+          margin-right                1px
+
+        &.search-button-replace:last-of-type
+          rounded                     0 4px 4px 0
+
+
+  .search-view-close-wrapper
+    display                         inline-flex
+    height                          30px
+    float                           right
+    justify-content                 center
+    align-items                     center
+    margin-bottom                   10px
+
+    .close-icon
+      position                      relative
+      size                          10px, 10px
+      top                           0
+
+      &:before
+        btn-icon-before-after()
+        mask-sprite                 ace "search_close"
+
+      &:hover:before
+        bg                          color, btn-hover-bg
+
+  &.with-replace-view
+    .search-replace-wrapper,
+    .search-replace-button-group
+      display                       inline-flex
+
+.goto-line-view
+  bottom                            0
+
+.ace_scrollbar
+  //webkit
+  &::-webkit-scrollbar
+    background            transparent
+    width                 15px
+
+  &::-webkit-scrollbar-thumb
+    background            #5f5f5f
+    rounded               22px
+    border                4px solid rgba(0, 0, 0, 0)
+    background-clip       padding-box
+
+  &::-webkit-scrollbar-corner
+    background-color      transparent
+
+  //moz
+  // maybe one day...
+
+.ace-base16
+  .ace_print-margin
+    background            #3b3b3b !important

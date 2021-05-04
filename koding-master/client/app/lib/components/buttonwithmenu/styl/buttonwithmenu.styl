@@ -1,0 +1,38 @@
+.ButtonWithMenuWrapper
+  size                      20px 20px
+  rel()
+
+  &:before
+    content                 ''
+    r-sprite                app chevron_icon
+    display                 block
+    margin-top              5px
+
+  button
+    pointer()
+    outline                 none
+    border                  none
+    bg                      color, transparent
+    size                    20px 20px
+    abs                     0px 0px
+
+.ButtonWithMenuItemsList
+  abs()
+  bg                          color, #FFF
+  padding                     5px 0
+  right                       -20px
+  top                         24px
+  rounded                     6px
+  size                        136px, auto
+  z-index                     2
+  shadow                      0 8px 35px rgba(0, 0, 0, 0.22)
+
+  li
+    pointer()
+    padding-left              12px
+    font-size                 12px
+    line-height               24px
+
+    &:hover
+      color                   #FFFFFF
+      bg                      color, #494949

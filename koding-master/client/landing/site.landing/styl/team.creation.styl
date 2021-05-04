@@ -1,0 +1,82 @@
+@import "lib/core.fn"
+
+@css {
+/*
+Team Group Creation stylesheet
+team.group.creation.styl
+*/
+}
+
+.content-page.Team
+
+  // GENERIC SIGNUPFORM CUSTOMIZATIONS
+
+  .kdtabpaneview .TeamsModal.TeamsModal--groupCreation
+
+    > h5 i
+      font-weight           700
+
+    .login-input-view
+      rel()
+      &.tr
+        bg                  color transparent
+
+
+  // DOMAIN TAB STYLE CUSTOMIZATIONS
+
+  .TeamsModal.TeamsModal--domain
+    &.not-supported-for-mobile
+      display               none
+
+    .login-input-view
+      border                1px solid #d9d9d9
+      rounded               3px
+      dFlex()
+
+      &.validation-error
+        border-color        #f13a18
+
+      input.kdinput
+        vendor              flex-grow, 1
+        border              none
+        width               auto
+        max-width           calc(100% \- 160px)
+        box-shadow          none !important
+        outline             none
+
+    .TeamDomainSuffix
+      abs                   0 41px 0 0
+      size                  160px 60px
+      max-width             160px
+      ellipsis()
+      color                 #999
+      font-weight           400
+      font-size             18px
+      line-height           25px
+      padding               19px 16px
+      margin                -82px 0 0
+      border-left           1px solid #d9d9d9
+      bg                    color, #fafafa
+      rounded               0 3px 3px 0
+      borderBox()
+
+
+  // USERNAME TAB STYLE CUSTOMIZATIONS
+
+  .kdtabpaneview.register .TeamsModal
+  .kdtabpaneview.username .TeamsModal
+
+    > h5
+      width                 335px
+      &.full
+        width               100%
+
+    .PasswordStrength
+      top                   -30px
+      left                  5px
+      rounded               3px
+      width                 calc(100% - 10px)
+      z-index               4
+
+    p.dim
+      margin                25px auto

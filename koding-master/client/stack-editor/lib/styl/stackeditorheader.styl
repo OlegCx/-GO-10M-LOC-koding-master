@@ -1,0 +1,32 @@
+@css {
+/*
+Stack Editor Header stylesheet
+stackeditorheader.styl
+*/
+}
+
+$accentColor                = #F2778A
+$titleColor                 = #424242
+$subtleColor                = #A59999
+$borderColor                = #E3E3E3
+
+.StackEditorView--header
+  margin-bottom             0
+  abs                       42px 15px 0 0
+  z-index                   1
+
+  .GenericButton
+    margin                  5px 5px 0 10px
+    padding                 6px 20px 5px
+    height                  30px
+    &:not(.save-test)
+      padding               9px 20px
+
+
+.StackEditorView--header.readonly
+  .GenericButton.save-test
+    display               none !important
+  div.StackEditorView--header-subHeader
+    display                 none
+  input.kdinput.text
+    opacity                 0.5

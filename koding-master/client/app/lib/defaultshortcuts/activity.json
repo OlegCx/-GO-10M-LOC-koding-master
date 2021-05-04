@@ -1,0 +1,62 @@
+[
+  {
+    "name": "prevwindow",
+    "binding": [
+      [
+        "alt+up"
+      ],
+      [
+        "alt+up"
+      ]
+    ],
+    "description": "Previous window"
+  },
+  {
+    "name": "nextwindow",
+    "binding": [
+      [
+        "alt+down"
+      ],
+      [
+        "alt+down"
+      ]
+    ],
+    "description": "Next window"
+  },
+  {
+    "name": "prevunreadwindow",
+    "binding": [
+      [
+        "alt+shift+up"
+      ],
+      [
+        "alt+shift+up"
+      ]
+    ],
+    "description": "Previous unread channel"
+  },
+  {
+    "name": "nextunreadwindow",
+    "binding": [
+      [
+        "alt+shift+down"
+      ],
+      [
+        "alt+shift+down"
+      ]
+    ],
+    "description": "Next unread channel"
+  },
+  {
+    "name": "glance",
+    "binding": [
+      [
+        "esc"
+      ],
+      [
+        "esc"
+      ]
+    ],
+    "description": "Glance new messages"
+  }
+]

@@ -1,0 +1,62 @@
+@import '~lab/Colors/Colors.stylus'
+
+$fs-xsmall = 13px
+$fs-small = 14px
+$fs-medium = 16px
+$fs-medium-large = 18px
+$fs-large = 20px
+$fs-xlarge = 22px
+
+$fw-thin = 200
+$fw-regular = 400
+$fw-bold = 600
+$fw-bolder = 900
+
+.Label
+  font-family               mainFontFamily
+  letter-spacing            0.15px
+  line-height               $fs-medium
+
+  strong
+    font-weight             $fw-bold
+  em
+    font-style              italic
+
+.xsmall
+  font-size                 $fs-xsmall
+.small
+  font-size                 $fs-small
+.medium
+  font-size                 $fs-medium
+.medium-large
+  font-size                 $fs-medium-large
+.large
+  font-size                 $fs-large
+.xlarge
+  font-size                 $fs-xlarge
+
+.Label
+.default
+  color                     $additional-4
+
+.danger
+  color                     $primary-1
+.success
+  color                     $primary-2
+.info
+  color                     $additional-6
+
+.secondary
+  color                     $additional-3-faded
+
+.right
+  text-align                right
+.center
+  text-align                center
+.left
+  text-align                left
+
+.monospaced
+  font-family               SourceCodePro
+
+

@@ -1,0 +1,3 @@
+"username",       "email",                     "password",       "firstName",      "lastName",       "group"
+
+"admin",          "root@localhost",            "admin",          "Koding",         "Admin",          "koding"

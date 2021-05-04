@@ -1,0 +1,69 @@
+{
+  "resource": {
+    "marathon_app": {
+      "app": {
+        "app_id": "/app-user-ident",
+        "container": [
+          {
+            "docker": [
+              {
+                "image": "python:3",
+                "network": "BRIDGE",
+                "parameters": {
+                  "parameter": [
+                    {
+                      "key": "entrypoint",
+                      "value": "/mnt/mesos/sandbox/entrypoint.${count.index * 1 + 1}.sh"
+                    }
+                  ]
+                },
+                "port_mappings": {
+                  "port_mapping": [
+                    {
+                      "container_port": 56789,
+                      "host_port": 0,
+                      "protocol": "tcp"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "count": 1,
+        "cpus": 1.2,
+        "env": {
+          "KODING_CMD": "python3 -m http.server 8080",
+          "KODING_KLIENT_URL": "$KLIENT_URL",
+          "KODING_METADATA_1": "***"
+        },
+        "fetch": [
+          {
+            "cache": true,
+            "executable": false,
+            "uri": "$SCREEN_URL"
+          },
+          {
+            "cache": true,
+            "executable": false,
+            "uri": "$CERT_URL"
+          },
+          {
+            "cache": false,
+            "executable": false,
+            "uri": "$KLIENT_URL"
+          },
+          {
+            "cache": false,
+            "executable": true,
+            "uri": "$ENTRYPOINT_URL/entrypoint.1.sh"
+          }
+        ],
+        "mem": 256,
+        "ports": [
+          0
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,70 @@
+@import '~lab/Colors/Colors.stylus'
+
+.main
+  height                    150px
+  display                   flex
+  flex-direction            column
+  justify-content           space-between
+  background-color          $additional-2
+  color                     $additional-3-faded
+  border-radius             8px
+
+.header
+  height                    60px
+
+.footer
+  text-transform            uppercase
+  span
+    font-size               13px
+
+.brand-wrapper
+  display                   flex
+  align-items               center
+  border-radius             4px
+  borderBox()
+  padding                   0 10px
+
+  &.small
+    background-color        $additional-2
+    height                  24px
+    width                   60px
+    padding                 0
+    border-radius           3px
+    justify-content         center
+
+.brand-default.small
+  width                     30px
+  height                    9px
+
+.brand-default
+.brand-default.regular
+  width                     60px
+  height                    18px
+
+.chip
+  m-sprite                  app, Chip
+  float                     right
+
+.number
+  display                   flex
+  justify-content           space-between
+  align-items               center
+
+.title
+  font-size                 13px
+  color                     $additional-6-dark
+
+.name
+  ellipsis()
+
+.info-row
+  display                   flex
+  align-items               center
+  height                    40px
+
+.link
+  color                     $primary-6
+  text-decoration           none
+
+  &:hover
+    text-decoration         underline

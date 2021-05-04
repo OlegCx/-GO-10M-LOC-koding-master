@@ -1,0 +1,1021 @@
+@require "./app.fonts"
+
+@css {
+/*
+MAIN APP stylesheet
+resurrection.styl
+*/
+}
+
+// When app class is added to html tag
+// layout becomes 100% width and height
+// so that apps can control their own
+// scrollviews and add their chrome frames
+html.app
+  height            100%
+
+  body
+    height          100%
+    overflow        hidden  // this is to avoid rubber-band/elastic scroll on macs
+
+body
+  bg                      color, #2b2b30
+  font-family             mainFontFamily
+  font-weight             400
+  -webkit-font-smoothing  subpixel-antialiased
+
+  &.noscroll
+    overflow        hidden
+
+  > .invisible
+    abs             -1000% 0 0 -1000%
+
+input
+textarea
+button
+  font-family               mainFontFamily
+
+input[type=checkbox]:checked + label:after
+  border-right              3px solid #48BA7D !important
+  border-top                3px solid #48BA7D !important
+
+pre
+  font-family               monoFamily
+
+.kdview
+  overflow                  visible
+
+.no-anim
+  noAnim()
+
+#kdmaincontainer
+  width                     auto
+
+  #main-sidebar
+    z-index                 0
+    vendor                  transition, width .3s ease
+    hidden()
+
+  &.fullscreen
+    width                   100%!important
+    left                    0!important
+    top                     0!important
+    bottom                  0!important
+    right                   0!important
+    z-index                 10
+    .application-page
+      padding               0!important
+    .app-settings-menu
+      top                   0
+      right                 0
+
+  &.with-sidebar
+    #main-panel-wrapper
+      fr()
+      vendor                transition, width .3s ease
+      margin-left           sidebarWidth + 1
+      width                 calc(100% - 258px)
+
+    #main-sidebar
+      z-index               2
+      visible()
+
+      .SidebarListItem
+        white-space         nowrap
+        rel()
+
+      .logo-wrapper
+
+        .team-logo-wrapper
+          .team-logo
+            size                    40px, 40px
+            dFlex()
+            -webkit-align-content   center
+            align-content           center
+            -webkit-justify-content center
+            justify-content         center
+            img
+              max-width             100%
+              max-height            100%
+              height                auto
+              flex                  0 0 auto
+              rounded               4px
+
+
+          .default
+            r-sprite              app, team_logo
+
+        .nickname
+          abs()
+          top               23px
+          left              46px
+          font-size         13px
+          color             #989898
+
+        .team-name
+          abs()
+          padding-left      43px
+          height            30px
+          color             #b3b3b3
+          margin-top        10px
+          font-size         13px
+          text-transform    capitalize
+          width             calc(100% - 80px)
+          background        none
+          cursor            pointer
+          z-index           10
+          noTextDeco()
+          ellipsis()
+          dIBlock()
+          &:after
+            content         ''
+            r-sprite        'app' '20_chevron_gray'
+            margin-left     1px
+            margin-top      -3px
+            opacity         .7
+            vertical-align  top
+            dIBlock()
+
+        a
+          vendor            transition, width .3s ease
+
+      > .kdcustomscrollview
+        .kdscrolltrack.horizontal
+          hidden()
+
+      .count
+      .SidebarListItem-unreadCount
+        vendor              transition, all .3s ease
+
+      .SidebarSection-header
+        vendor              transition, opacity .3s ease
+
+
+    &.hover
+    &.collapsed
+
+      #main-sidebar
+        border-right        2px solid #131313
+
+        .SidebarListItem
+          white-space       nowrap
+
+          &:hover
+            white-space     normal
+
+        .progressbar-container
+          hidden()
+
+      #main-panel-wrapper
+        width               calc(100% - 41px)
+        margin-left         41px
+
+    &.hover
+      #main-sidebar
+        width               sidebarWidth + 1
+
+      .sidebar-close-handle
+        vendor              transform, scaleX(-1)
+
+    &.collapsed
+      #main-sidebar
+        .Sidebar-logo-wrapper
+          hidden()
+
+        .activity-sidebar
+          padding           1px 12px
+
+        &.team
+          .logo-wrapper.group
+            > a
+              width         0
+            .nickname
+              display       none
+
+          .SidebarListItem
+            overflow        hidden
+
+        .logo-wrapper
+          padding           0
+
+
+        .sidebar-close-handle
+          display           none !important
+
+        .MachineSettings
+        .SidebarListItem-title
+        .SidebarListItem-progressbar
+          opacity           0
+
+        .SidebarSection-header
+          h4 > a
+            color           transparent !important
+            &:before
+              size          12px, 12px
+              left          2px
+              top           2px
+              color         inherit !important
+
+        .count
+        .SidebarListItem-unreadCount
+          right             16px
+          top               -1px
+          size              8px 8px
+          rounded(50%)
+          font-size         0
+          padding           0
+          border            1px solid #393233
+
+        .SidebarListItem-unreadCount
+          right             -1px
+          top               1px
+          min-width         0
+
+#main-panel-wrapper
+  min-height                100%
+  z-index                   1
+  bg                        color, white
+  vendor                    transition, box-shadow .177s ease
+
+  .system-notification
+    abs                     3px 3px
+    height                  50px
+    kalc                    width, (100% \- 6px)
+    bg                      color #F69C31
+    color                   white
+    z-index                 10
+    font-size               14px
+    font-weight             300
+    line-height             18px
+    padding                 17px 50px 17px 18px
+    opacity                 .9
+    vendor                  transform, translateY(-100%) translateZ(0)
+    vendor                  transition, transform .177s ease-out
+    borderBox()
+    &.in
+      vendor                transform, translateY(0%) translateZ(0)
+    p
+      ellipsis()
+    b
+      font-weight           600
+    a
+      color                 white
+      text-decoration       underline
+    a.close
+      abs                   0px 0px
+      size                  50px 50px
+      &:before
+        content             ''
+        display             block
+        r-sprite            app 'notification_warning_close'
+        margin              13px 0 0 13px
+
+    &.error
+      bg                    color, #EB4835
+
+    &.success
+      bg                    color, #1AB05D
+
+    &.stack-admin-message
+      z-index               10000
+
+.header-notification
+  size                100% 26px
+  bg                  color rgba(24, 148, 83, .9)
+  bg                  image url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAQAAAAngNWGAAAAT0lEQVQ4y43SOxIAIAxCQUruf+HYqBPNj6HdjgdjHLJpzCLMWYAV+2DNHtgxB3t24cQ2nJkRGjNCYyksThXZD5tERObhEJzIDhTyFRkhMi6JHdO5oh57CwAAAABJRU5ErkJggg==')
+  bg                  repeat repeat
+  bg                  scroll no-scroll
+  vendor              transition, top .077s ease-in
+  left                0
+  top                 29px
+  z-index             0
+  color               white
+  letter-spacing      .05em
+  text-align          center
+  line-height         26px
+  font-size           12px
+  borderBox()
+  abs()
+  &.in
+    top               55px
+  &.warn
+    bg                color rgba(187, 159, 9, .9)
+  &.err
+    bg                color rgba(238, 100, 98, .9)
+  &.fx
+    vendor            animation, progress 60s linear infinite
+  strong
+    font-weight       600
+  .cancel
+    right             10px
+    top               3px
+    abs()
+  a
+    border-bottom     1px solid white
+    color             white
+    noTextDeco()
+  .custom-link-view
+    display           inline-block
+    size              16px 16px
+    vertical-align    top
+    border-bottom     none
+    margin            5px 0 0 5px
+    span.close.icon
+      display         block
+      r-sprite        app '16_close_white'
+
+
+#kdmaincontainer.logout-tv
+  vendor                  animation, logoutTv .5s 1 forwards ease
+  abs                     0px 0 0 0px
+  size                    100vw, 100vh
+
+  &~.turn-off-line
+    top                   50%
+    left                  0
+    size                  100%, 2px
+    background            #fff
+    opacity               0
+    z-index               1000
+    vendor                animation, logoutTvLine .3s .35s 1 forwards ease
+    abs()
+    &:after
+      content             ""
+      display             block
+      margin              -3px auto 0
+      size                50%, 6px
+      background          #fff
+      rounded             100%
+      box-shadow          0 0 20px 10px rgba(255,255,255,.6)
+  &~.turn-off-dot
+    top                   50%
+    left                  50%
+    bg                    color, #fff
+    rounded               20px
+    size                  10px, 10px
+    margin-top            -5px
+    vendor                transform, scaleX(0) scaleY(0)
+    shadow                0 0 8px #fff
+    vendor                animation, logoutTvDot .3s .6s 1 forwards ease
+    z-index               1000
+    abs()
+
+#kdmaincontainer.scale
+    vendor            animation, shrink 1s ease-out
+    vendor            animation-iteration-count, 1
+    vendor            transform-style, preserve-3d
+    vendor            transform, scale(0)
+
+
+#kdmaincontainer > .pointer
+  abs()
+  bottom                380px
+  left                  500px
+  top                   auto
+  display               block
+  z-index               99999
+  size                  20px, 20px
+  border                3px solid white
+  opacity               1
+  bg                    color, #ff9200
+  gradient              #FFAB23, #F27500
+  vendor                transition, left 2s ease-in-out\,\
+                                    top 2s ease-in-out\,\
+                                    opacity .4s
+  border-radius         50%
+  shadow                0px 1px 3px 0px rgba(0,0,0,.2)
+  &.clickPulse
+    vendor              animation, clickAnimate 1s forwards ease-in-out
+  &.out
+    opacity             0
+
+.kdnotification
+  a
+    color               inherit
+
+@-webkit-keyframes clickAnimate
+  0%
+    -webkit-transform   scale(1)
+    shadow              0 0 0 0 rgba(255,146,0,0)
+  15%
+    -webkit-transform   scale(0.6)
+  25%
+    -webkit-transform   scale(1)
+  50%
+    shadow              0 0 0 10px rgba(255,146,0,.8)
+  100%
+    shadow              0 0 0 25px rgba(255,146,0,0)
+
+@-moz-keyframes clickAnimate
+  0%
+    -moz-transform      scale(1)
+    shadow              0 0 0 0 rgba(255,146,0,0)
+  15%
+    -moz-transform      scale(0.6)
+  25%
+    -moz-transform      scale(1)
+  50%
+    shadow              0 0 0 10px rgba(255,146,0,.8)
+  100%
+    shadow              0 0 0 25px rgba(255,146,0,0)
+
+// Intro animation for 'Show me how!' button
+
+.cta_button
+  vendor                animation, bounceIn .6s ease-in-out
+
+@-webkit-keyframes bounceIn
+  0%
+    -webkit-transform   scale(0)
+    opacity             0
+  50%
+    -webkit-transform   scale(1.1)
+    opacity             1
+  75%
+    -webkit-transform   scale(0.9)
+  100%
+    -webkit-transform   scale(1)
+
+@-moz-keyframes bounceIn
+  0%
+    -moz-transform      scale(0)
+    opacity             0
+  50%
+    -moz-transform      scale(1.1)
+    opacity             1
+  75%
+    -moz-transform      scale(0.9)
+  100%
+    -moz-transform      scale(1)
+
+
+body.account
+  .input-validation
+    margin-left         30px !important
+
+  .input-validation div.wrapper
+    background-color    rgba(217, 95, 95, .75)
+    shadow              none
+    font-size           14px
+    font-weight         600
+    text-align          center
+    line-height         18px
+    -webkit-font-smoothing antialiased
+
+  .input-validation.placement-top:after
+    border-top-color    rgba(217, 95, 95, .75)
+
+  .kdoverlay
+    background          rgba(255, 255, 255, .75)
+
+
+paymentGreen       = #00b156
+
+paymentGrayDarker   = #6f6f6f
+paymentGrayDark     = #a7a7a7
+paymentGraySoftDark = #d5d5d5
+paymentGray         = #e5e5e5
+paymentGrayLight    = #e8e8e8
+paymentGrayLighter  = #f8f8f8
+
+
+// machine state modal
+.kdoverlay.env-modal-overlay
+  bg                    color, #151516
+  bg                    image, radial-gradient(#5B5B64, #151516)
+  opacity               0.90
+  abs()
+
+
+.kdmodal.env-modal
+  .kdmodal-inner
+    margin                  0
+
+  .content-container
+    text-align              center
+
+  .kdbutton
+    rounded                 4px !important
+    bg                      color, #4EA04C !important
+    height                  40px !important
+    &:focus
+      vendor                box-shadow, none !important
+
+  .footer
+    bg                      color, #f3f3f3
+    font-size               14px
+    color                   #5E5E5E
+    padding                 25px 30px
+    rounded                 0 0 3px 3px
+
+
+.kdmodal.env-machine-state
+  left                      50% !important
+  margin-left               -91px
+  border                    none
+
+  &.has-readme
+    margin-left             -141px
+    width                   540px !important
+
+    .stdout
+      width                 498px
+
+  &.team
+    .stopping + .progressbar-container
+      .bar
+        background-color    #e94835
+
+    &.full
+      .bar
+        margin-left         100%
+
+  .kdmodal-content
+    overflow                visible
+
+  .kdbutton
+   &.turn-on
+     padding                0 20px 0 14px
+     .icon
+       r-sprite             'ide', 'turn_on'
+       margin               12px 12px 0 0 !important
+       padding              0
+
+
+  .content-readme
+    border-bottom           1px solid #eee
+    styleScrollBars         rgba 0,0,0,.15
+
+    &.has-vertical
+      shadow                inset 0 -5px 15px -5px #eee
+
+    .has-markdown
+      padding               0 20px
+      font-size             14px
+      max-height            240px
+
+
+  .content-container
+    margin-bottom       30px
+
+    .error-message
+      padding               12px 0
+      margin                22px 0 -30px 0
+      background            #D95F5F
+      color                 #FFF
+      border-radius         0 0 2px 2px
+
+      p, span
+        font-size       12px
+        line-height     17px
+      span.close
+      span.error-details
+      span.contact-support
+        text-decoration  underline
+        cursor           pointer
+      a
+        text-decoration  underline
+        color            white
+      &.warning
+        background      #999 !important
+
+  .verify-message
+    padding             5px 14px
+    font-size           14px
+    color               #5E5E5E
+    cite
+      text-decoration   underline
+      color             #4EA04C
+      cursor            pointer
+
+  .verify-pin-input
+    margin              10px 10px 20px
+    width               390px
+
+  .plan-change-button
+    margin              10px 10px 0 !important
+    width               calc(50% \- 30px) !important
+
+    &.downgrade
+      background-color  #d75b5b !important
+
+  .expired-message
+    padding             8px 25px
+    font-size           14px
+    color               #5E5E5E
+    text-align          left
+
+    h1
+      font-size         20px
+      font-weight       400
+      margin-bottom     10px
+      color             #4ea04c
+      padding-bottom    10px
+
+    b
+      font-weight       bold
+
+    p
+      margin-bottom     10px
+
+
+  .state-label
+    padding                 20px
+    font-size               18px
+    color                   #7D7D7D
+
+    font-weight             400
+    strong
+      color                 #404040
+    .icon
+      display               inline-block
+      r-sprite              'ide', 'vm_state_stopped'
+      margin-right          11px
+      vertical-align        middle
+    &.starting
+    &.building
+      .icon
+        r-sprite            'ide', 'vm_state_starting'
+    &.running
+      .icon
+        r-sprite            'ide', 'vm_state_running'
+    &.notfound
+      h1
+        margin-bottom       25px
+      span
+        font-size           16px
+      a
+        color               #48BA7D
+    &.stopped
+      h1
+        margin-bottom       25px
+      p, ol
+        font-size           16px
+        margin-bottom       15px
+      p:last-child
+        margin-bottom       0
+      ol
+        margin-left         16px
+        list-style          decimal inside
+      a
+        color               #48BA7D
+      a.managed-disconnect
+        text-decoration     underline
+        cursor              pointer
+
+  .footer
+    .upgrade-link
+      color             #4EA04C
+      display           block
+    .info-link
+      color             #A8A8A8
+      font-size         12px
+      text-decoration   none
+      border-bottom     1px solid #A8A8A8
+    .more-icon
+      display           inline-block
+      r-sprite          'ide', 'question_mark'
+      margin-left       8px
+      top               5px
+      position          relative
+
+  .stdout
+
+    margin-top          2px
+    left                20px
+    size                400px, auto
+    max-height          0
+
+    color               #DDD
+    padding             2px 6px
+    background          #111
+    font-size           14px
+    font-family         'UbuntuMono', monospace
+
+    box-shadow          0 3px 10px black
+    border-radius       0 0 5px 5px
+
+    overflow            hidden
+    vendor              transition, max-height .2s ease-out
+
+    borderBox()
+    abs()
+
+    &.in
+      vendor            transition, max-height .2s ease-in
+      max-height        200px
+
+
+  .progressbar-container
+    size                268px, 20px
+    margin              14px auto
+    border              none
+    rounded             4px
+    bg                  image, none
+    bg                  color, #D8D8D8
+
+    .bar
+      bg                    image, none
+      bg                    color, #5DC45A
+      vendor                box-shadow, none
+      rounded               4px
+      vendor                transition, margin .3s ease
+
+.managed-vm
+
+  a
+    noTextDeco()
+    color             #333
+
+  .kdlistview
+    font-size         14px
+    font-weight       bold
+    margin-bottom     20px
+
+    .kite-item
+      display         flex
+      display         -webkit-flex
+      border-bottom   1px solid #ccc
+      cursor          default
+
+      &.header
+        font-size     13px
+        opacity       .6
+        &:hover
+          background  inherit !important
+
+      &:hover
+        background    #eee
+
+      &.selected
+        background    #ddd
+
+      > div
+        margin        auto
+        width         100px
+        padding       8px
+        white-space   nowrap
+        text-overflow ellipsis
+        overflow      hidden
+
+  &.find-nodes
+  &.add-managedvm
+    left            50% !important
+    margin-left     -190px
+    .kdmodal-title
+      cursor        default
+
+  &.modal
+
+    .kdbutton.icon-only
+
+      background    none
+      border        none
+      padding       9px // Added for sprites and retina screens issue ~GG
+      margin        10px 0
+      float         left
+
+      &.retry
+        r-sprite    'ide', 'refresh'
+
+      &.inline
+        display     inline-block
+        float       none     !important
+        margin      3px 10px !important
+
+
+    .kdbutton
+      float         right
+      margin-left   10px
+
+      &[disabled=disabled]
+        opacity     .6
+
+    .kdloader
+      width         auto
+      margin        3px 10px
+      &.inline
+        margin      10px 0 !important
+
+    .title
+      width         auto
+      display       inline-block
+      line-height   23px
+
+    .kdview.view-waiting
+
+      text-align    center
+      padding       20px
+      box-sizing    border-box
+      min-height    70px
+
+      .message
+        display     inline
+
+    .kdview.message
+
+      &.inline
+        font-size     14px
+        float         left
+        width         auto
+        margin        8px
+
+      &.warning
+        font-size     13px
+        background    #FEFFEF
+        border        1px solid #ccc
+        box-sizing    border-box
+        padding       10px
+        border-radius 4px
+        line-height   15px
+
+
+.kdautocomplete.vm-sharing
+
+  border                    1px solid #aaa
+  border-top                none
+  margin-top                -1px !important
+
+
+.install-kd-modal
+.ContentModal
+.add-managed-vm
+
+  .kdmodal-content
+    overflow                hidden !important
+
+  .bg
+    margin-right            50px
+    r-sprite                'app', 'managed_modal_bg'
+    fl()
+
+    .extra
+      r-sprite              'app', 'managed_modal_bg2'
+      position              relative
+      top                   7px
+      left                  56px
+
+  &.error
+  &.polling
+    .extra
+      hidden()
+
+  &.polling
+    .kdloader
+      top                   80px
+      left                  102px
+      size                  26px, 26px
+      abs()
+
+  &.error
+    .bg
+      r-sprite              'app', 'managed_modal_error_bg'
+
+    p
+      &:first-child
+        margin              38px 0 32px 0
+
+  section
+    fl()
+    width                   360px
+
+    a
+      color                 #48BA7D
+
+    p
+      color                 #747474
+      font-size             14px
+      line-height           17px
+      margin-bottom         10px
+
+      &.middle
+        margin-bottom       3px
+
+    span
+      font-size             12px
+      line-height           15px
+      color                 #747474
+      display               inline-block
+      bottom                0px
+      abs()
+
+      a
+        display             block
+        margin-top          5px
+
+    strong
+      font-weight           600
+      display               inline-block
+      margin-top            5px
+
+
+  .code
+    fl()
+    margin-top              15px
+    bg                      color, #F3F3F3
+    border                  1px solid #DEDEDE
+    rounded                 2px
+    size                    350px 43px
+    rel()
+    borderBox()
+
+    .kdinput
+      border                none
+      height                40px
+      font-size             13px
+      width                 289px
+
+      &:hover
+        border              none
+
+      &:focus
+        border              none
+        vendor              shadow, none
+
+    .select-all
+      bg                    color, #48BA7D
+      font-size             12px
+      color                 #FFF
+      size                  60px, 43px
+      text-align            center
+      line-height           43px
+      right                 0
+      bottom                -1px
+      z-index               2
+      rounded               0 2px 2px 0
+      borderBox()
+      pointer()
+      abs()
+
+    .kdloader
+      margin                13px 0 0 165px
+
+
+.install-kd-modal
+  .has-markdown
+    p
+      padding               0px
+
+    code
+      padding               1px 4px
+
+
+.kdmodal.delete-files-modal
+  .kdmodal-content
+    max-height              200px
+
+
+// Admin modal specific styling
+.AppModal--admin
+
+  &.kdmodal .kdmodal-inner .kdmodal-content
+    overflow                hidden
+
+  // common tab styling
+  .AppModal-content.kdtabview
+    overflow                hidden
+
+  .kdtabhandlecontainer
+    background              none
+    padding                 0
+    height                  62px
+    line-height             62px
+    box-shadow              inset 0 -3px 0 #f2f2f2
+    border                  none
+
+    .kdtabhandle-tabs
+      size                  auto, auto
+      fl()
+
+    .kdtabhandle
+      padding               0 23px
+      margin                0
+      border                none
+      line-height           inherit
+      height                62px
+      background            none
+      color                 #969696
+      opacity               0.99
+      font-size             14px
+      font-weight           600
+
+      a
+        display             inline-block
+        ellipsis()
+        font-weight         400
+        width               100%
+        color               #969696
+
+      &.active
+        box-shadow          inset 0 -3px 0 #01b05a
+        color               #575757 !important
+        bg                  color, transparent !important
+        a
+          color             #575757
+
+.kdnotification.tray.disconnected
+  pointer()
+
+// workaround for scroll problem in test runner page
+html.test-runner body
+  overflow                  auto !important

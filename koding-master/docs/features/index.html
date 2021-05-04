@@ -1,0 +1,176 @@
+---
+layout: default
+title: Features
+permalink: /features
+---
+
+<!-- HEADER -->
+{% include header.html with_signup_form='true' has_sticky_navigation='true' background_color='#F8A731' %}
+
+{% assign path = site.url | append: '/assets/img/landing/misc' %}
+
+<style>{% include css/about-hero.css %}</style>
+<div class="Header FeaturesHome-Header">
+  <div class="Header--outer-wrapper">
+    <div class="Header--wrapper">
+      <div class="Header--content">
+        <h1>Flawlessly configure dev environments in one click</h1>
+        <p>No matter how complex your project is, Koding for teams makes it easy to share your entire development stack with anyone, anywhere.</p>
+      </div>
+      <img src="{{ site.url }}/assets/img/landing/heroes/hero_icon_features.svg" alt="Features">
+    </div>
+  </div>
+</div>
+
+
+<style>{% include css/features-video.css %}</style>
+<style>{% include css/features-services.css %}</style>
+<link rel="stylesheet" href="{{ site.url }}/css/slick.css">
+{% include features-services.html
+  title="If you need to build it in the cloud, you can build it with Koding."
+  paragraph="Integrate any service with a few lines of code. Whether you use Heroku with MongoDB & Node.js,
+  or AWS with Ruby and MySQL, Koding’s powerful configuration manager can handle it.
+  Just add the service you need to Koding’s stack script, and voilå — you're ready to roll."
+  path="/assets/img/landing/company-logos/"
+%}
+
+
+<style>{% include css/features-content.css %}</style>
+{% include features-content.html
+   title="Seamless and powerful environment."
+   image1="/assets/img/landing/features/power_cloud.svg"
+   image1_width="136"
+   image1_height="134"
+   title1="The power of AWS without the pain."
+   column1="Get your whole team working on cloud VMs without the steep learning curve of setting them up."
+   image2="/assets/img/landing/features/stack_updates.svg"
+   image2_width="136"
+   image2_height="134"
+   title2="Send stack updates to your whole team."
+   column2="Send automatic alerts whenever your team stack changes, so your team can pull the latest updates."
+   image3="/assets/img/landing/features/share_credentials.svg"
+   image3_width="136"
+   image3_height="134"
+   title3="No sliced-up hosts means no restrictions"
+   column3="We don’t slice up hosting resources like LXC or Docker, so your environment will never be compromised."
+   alternate_background="yes" %}
+
+<link rel="stylesheet" href="{{ site.url }}/css/logobar.css">
+{% include features-logobar.html
+   path="/assets/img/landing/company-logos/"
+   title="Seamless support for your favorite cloud providers"
+   paragraph=""
+%}
+
+{% include features-content.html
+   title="You don't need to change your workflow."
+   paragraph="Koding for Teams uses a blazing-fast FUSE-based file system to simulate a local environment on whatever machine you’re using. So your development workflow stays local and familiar while you code entirely in the cloud."
+   image_below="/assets/img/landing/misc/terminal.png"
+   image_below_mobile="/assets/img/landing/misc/terminal-mobile.png"
+   image_below_width="1840"
+   image_below_height="822"
+   image1="/assets/img/landing/features/looks_local.svg"
+   image1_width="148"
+   image1_height="132"
+   title1="Looks and feels local. Takes up zero space."
+   column1="Got a monster, terabyte-sized app? Access it on a personal laptop as easily as you would on cloud provisioned hardware."
+   image2="/assets/img/landing/features/develop_in_the_cloud.svg"
+   image2_width="148"
+   image2_height="132"
+   title2="Seamlessly develop in the cloud"
+   column2="Stop stressing out over chronic connection timeouts and baffling host errors. Koding for Teams’ seamless cloud setup means you’ll never upload via FTP or scp again."
+   image3="/assets/img/landing/features/browser_coding.svg"
+   image3_width="148"
+   image3_height="132"
+   title3="Coding in the browser is 100% optional."
+   column3="We get it: No one wants to give up their terminal & text editor to code in the cloud. With Koding, you only use the browser-based IDE when you feel like it."
+   alternate_background="yes" %}
+
+{% include features-content.html
+  title="Code comfortably in the cloud"
+  image1="/assets/img/landing/features/workflow.svg"
+  image1_width="136"
+  image1_height="134"
+  title1="Preserve your workflow."
+  column1="Connect your local development tools and workflow to the cloud with a single curl command."
+  image2="/assets/img/landing/features/no_hardware.svg"
+  image2_width="136"
+  image2_height="134"
+  title2="No hardware restrictions."
+  column2="Don't restrict yourself to your laptop, use the power of cloud ..."
+  image3="/assets/img/landing/features/flexible_ide.svg"
+  image3_width="136"
+  image3_height="134"
+  title3="A flexible, intuitive IDE."
+  column3="Access a powerful browser-based IDE & terminal when you’re away from your regular workspace."
+%}
+
+<style>{% include css/features-cta.css %}</style>
+<div class="FeatureCTA">
+  <p>Developers love Koding because they can still use the IDEs and services they love</p>
+</div>
+
+<style>{% include css/features-threecols.css %}</style>
+
+{% include features-threecols.html
+   title="Embrace infrastructure as code"
+   column_1="
+    <h3>Simple stack scripts</h3>
+    <p><span>The core of every Koding for Teams project is a simple, shareable stack script that serves as a blueprint for your app’s entire infrastructure.</span></p>"
+   column_2="
+    <h3>Stack-level version control</h3>
+    <p><span>Koding stack scripts are versionable, so you can manage low-level components like storage and networking as easily as conventional code.</span></p>"
+   column_3="
+    <h3>Secure user permissions</h3>
+    <p><span>Only administrators get write access to the stack script, keeping project configuration security manageable no matter how many people join your team.</span></p>"
+  column_4="
+    <h3>Connect your own machine</h3>
+    <p><span>Connect any Ubuntu Linux machine with a public IP address to your Koding account.</span></p>"
+  column_5="
+    <h3>Deploy multiple VMs</h3>
+    <p><span>Run your app on an entire network of machines by simply adding a few lines of code to your stack script.</span></p>"
+  column_6="
+    <h3>SSH and Sudo access.</h3>
+    <p><span>Full and easy SSH access to your VMs. Sudo access is available if you use your local machine.</span></p>"
+%}
+
+
+<!-- FOOTER -->
+{% include footer.html %}
+
+<!--[if lte IE 9]>
+  <style>{% include css/index-ie.css %}</style>
+<![endif]-->
+
+<script type="text/javascript" src="{{ site.url }}/js/slick.min.js"></script>
+<script>
+  $(function () {
+      var activeSlide = $('.FeatureServices--list-item.active');
+      var initialSlideIndex = $('.FeatureServices--list-item').index(activeSlide);
+      var length = $('.FeatureServices--list-item').length;
+      var slidesToShow =  Math.round(length / 2);
+      $('.codeSource').animate({'opacity': 0}, 300, function(){
+          $(this).html(activeSlide.data('code')).animate({'opacity': 1}, 300);
+      });
+      $('.FeatureServices--list').slick({
+          dots: false,
+          arrows: false,
+          infinite: true,
+          speed: 300,
+          slidesToShow:  slidesToShow,
+          centerMode: true,
+          variableWidth: true,
+          draggable: false,
+          focusOnSelect: true,
+          responsive: true,
+          initialSlide: initialSlideIndex,
+          easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
+      });
+      $('.FeatureServices--list-item').click(function() {
+          var code = $(this).data('code');
+          $('.codeSource').animate({'opacity': 0}, 300, function(){
+              $(this).html(code).animate({'opacity': 1}, 300);
+          });
+      });
+  });
+</script>

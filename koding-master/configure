@@ -1,0 +1,159 @@
+#!/usr/bin/env coffee
+log = console.log
+fs = require 'fs'
+os = require 'os'
+path = require 'path'
+minimist = require 'minimist'
+{ extend, defaults, clone } = require 'underscore'
+
+argv = minimist process.argv.slice(2), {
+  string: ['version']
+}
+
+defaultEnv = argv.config or process.env.DEFAULTENV or 'default'
+
+log "-------------------------"
+log ""
+log "# ./configure assumes development environment - comes bundled with options below."
+log "# override them as you see fit with command line arguments like --config --branch etc."
+log ""
+
+# clone all the arguments to options
+options = extend {}, argv
+
+# set sane defaults for _some_ options.
+defaults options,
+  config: defaultEnv
+  envFileName: '.env'
+
+options.inheritEnvVars = if argv.hasOwnProperty 'without-envvars' then no else yes
+options.runGoWatcher = argv.hasOwnProperty 'with-go-watcher'
+options.watchNode = argv.hasOwnProperty 'watch-node'
+options.sendEventsToSegment = if argv['disable-segment'] then off else on
+
+rest = ->
+  options.publicHostname = argv.publichostname or "http://#{options.hostname}:#{options.publicPort or '8090'}"
+
+  log "Configuring with options:"
+  log "-------------------------"
+  log options
+  log "-------------------------"
+  log ""
+
+  KONFIG = require("./config/main.#{options.config}.coffee")(options)
+
+  equals = (x1, x2, whitelist)->
+    for key of x1 when key not in whitelist
+      if typeof (x2[key]) is "undefined"
+        console.log "#{key} is undefined, but exists in '#{defaultEnv}'"
+        return false
+
+      if x1[key] and typeof (x1[key]) is "object"
+        unless equals(x1[key], x2[key], whitelist)
+          console.log x1[key], x2[key], "are not the same"
+          return false
+
+    return true
+
+
+  configMatchesDefault = (config)->
+
+    dev     = require("./config/main.#{defaultEnv}.coffee")(options)
+    devKeys = JSON.parse(dev.JSON)
+    keys    = JSON.parse config.JSON
+
+    equals(devKeys, keys, config.configCheckExempt)
+
+
+  createEnvFile = (KONFIG) ->
+
+    for own type, content of KONFIG.envFiles
+      fs.writeFileSync "#{options.envFileName}.#{type}", content
+
+
+  createRunFile = (KONFIG)->
+
+    fs.writeFileSync "run",KONFIG.runFile
+    fs.chmodSync "./run", 0o755
+
+    fs.writeFileSync "./deployment/generated_files/supervisord.conf", KONFIG.supervisorConf
+    if options.kubernetes
+      fs.writeFileSync "./deployment/kubernetes/backend-pod/containers.yaml", KONFIG.kubernetesConf
+      fs.writeFileSync "./deployment/kubernetes/build-pod.yaml", KONFIG.buildPodConf
+      fs.writeFileSync "./deployment/kubernetes/frontend-pod/client-containers.yaml", KONFIG.clientPodConf
+    fs.writeFileSync "./deployment/generated_files/nginx.conf", KONFIG.nginxConf
+    fs.writeFileSync "./nginx.conf", KONFIG.nginxConf
+    fs.writeFileSync 'supervisord.conf', KONFIG.supervisorConf
+
+    log "Configuration done"
+    log "------------------"
+    log "MAC INSTALL INSTRUCTIONS"
+    log "------------------"
+    log "1) install Docker"
+    log "2) brew install mongodb nginx"
+    log "3) do './run install' "
+    log "4) do './run buildservices' to create backend service containers after installing docker."
+    log "5) you can then type './run' to run Koding and see it on #{options.hostname}"
+
+    (require "./deployment/socialapiconfig.coffee").create KONFIG
+    (require "./deployment/mongomigrationconfig.coffee").create KONFIG
+    (require "./deployment/gokodingconfig.coffee").create KONFIG
+
+  # write revision to client/.config.json
+  writeVersion = (obj) ->
+    file = __dirname + '/client/.config.json'
+    config = if fs.existsSync file then require file else {}
+    config.rev = obj.client.version
+    configStr = JSON.stringify config
+    fs.writeFileSync file, configStr
+    console.log "written #{file}"
+
+  createEnvFile KONFIG
+  createRunFile KONFIG
+  writeVersion KONFIG
+
+  return  unless defaultEnv is 'default'
+
+  # do not check the schemas for default environment when user has no
+  # vault directory (e.g. clean repo), otherwise the configure
+  # will fail.
+  if defaultEnv != 'default' or fs.exists './vault'
+    # check 'prod', 'sandbox' config schema against 'dev'
+    #
+    # NOTICE(rjeczalik): this check causes BUG in main.default.coffee
+    # and also it overwrites fields in options when a main.#{c}.coffee
+    # does not use ' or= ' assigments.
+    for c in ["sandbox", "prod"]
+      if fs.existsSync("./config/main.#{c}.coffee")
+        _options = clone options
+        config = require("./config/main.#{c}.coffee")(_options)
+        process.exit(1)  unless configMatchesDefault(config)
+
+updateVault = ->
+  # only run copying vault in dev env
+  return rest() unless options.config is 'dev'
+  return rest()  if process.env.CI
+  { execFile } = require 'child_process'
+
+  execFile './scripts/copy_vault.sh', (err, stdout, stderr) ->
+    console.log err  if err
+    process.stdout.write stdout
+    process.stderr.write stderr
+    rest()
+
+try
+  options.version = require('git-rev-sync').short()
+catch
+  try
+    options.version = fs.readFileSync(path.join(__dirname, './VERSION'), 'utf-8').trim()
+
+if argv.hostname
+  options.hostname = argv.hostname
+  updateVault()
+else if os.type() is "Darwin"
+  options.hostname = "dev.koding.com"
+  updateVault()
+else
+  { body } = require('sync-request') 'GET', 'https://p.koding.com/-/ip'
+  options.hostname = body.toString()
+  updateVault()

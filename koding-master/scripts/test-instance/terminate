@@ -1,0 +1,21 @@
+#!/usr/bin/env coffee
+
+KONFIG = require 'koding-config-manager'
+
+{
+  route53: { hostedZoneId }
+} = KONFIG.test.credentials.AWS
+
+[
+  instanceId
+  ipAddress
+  hostname
+] = process.argv.slice 2, 5
+
+AWS = require './aws'
+EC2 = new AWS.EC2()
+R53 = new AWS.Route53()
+
+EC2.terminateInstances InstanceIds: [instanceId], (err, res) ->
+  console.error err  if err
+  process.exit()

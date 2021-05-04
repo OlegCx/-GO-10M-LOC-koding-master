@@ -1,0 +1,858 @@
+$warningColor               = #f2778a
+$regularColor               = #989898
+
+/* General page structure and common styles */
+.resource-state-modal.kdmodal
+  -webkit-font-smoothing    antialiased
+  -moz-osx-font-smoothing   grayscale
+  width                     auto !important
+
+  /* Overrides for specific page flows */
+  .build-stack-flow
+
+    header
+      height                60px
+      line-height           60px
+      border-bottom         0
+
+      h1
+        font-size           20px
+        color               $regularColor
+
+    footer
+      height                70px
+      bg                    color, #f4f4f4
+
+      .GenericButton
+        abs()
+        right               30px
+        top                 14px
+
+        &.secondary
+          left              30px
+          right             auto
+
+      a.back-link
+        position            relative
+        float               left
+        top                 26px
+        left                20px
+        font-weight         300
+        color               #989898
+
+    section.main
+      width                 780px
+      height                414px
+      bg                    color, #fff
+
+      h2
+        font-size           18px
+        letter-spacing      .21px
+        line-height         20px
+        padding-top         29px
+
+      > p
+        letter-spacing      .15px
+        color               $regularColor
+        margin-top          0
+        margin-bottom       20px
+
+    .GenericButton.secondary
+      padding             0 15px
+      color               #5e5e5e
+      bg                  color, #fff
+      border              1px solid #e4e4e4
+
+      .button-title
+        font-size         14px
+
+
+  .start-machine-flow,
+  .stop-machine-flow
+
+    header
+      height                50px
+      border-bottom         1px solid #e4e4e4
+
+      h1
+        font-size           17px
+        line-height         20px
+        padding-top         14px
+        color               $regularColor
+
+    section.main
+      width                 600px
+      rounded               6px
+      color                 $regularColor
+
+      p
+        color               $regularColor
+
+      .GenericButton
+        height              42px
+        min-width           160px
+        borderBox()
+        display             block
+
+        span.button-title
+          font-size         16px
+          line-height       18px
+          text-transform    uppercase
+
+
+  /* Loader */
+  .loader-container
+    width                   400px
+    height                  200px
+    text-align              center
+    borderBox()
+    padding-top             50px
+
+    .loader-text
+      font-size             20px
+      letter-spacing        .2px
+      color                 #424242
+      margin-bottom         15px
+
+
+  /* Wizard pane */
+  .wizard-progress-pane
+    border-bottom           1px solid #e4e4e4
+    text-align              center
+    rel()
+
+    .wizard-step
+      display               inline-block
+      borderBox()
+      width                 260px
+      height                40px
+      font-size             14px
+      font-weight           300
+      letter-spacing        .27px
+      line-height           40px
+      bg                    color, #f4f4f4
+      color                 #727272
+      rel()
+      border-left           1px solid #fff
+
+      .index
+        display             inline-block
+        size                24px, 24px
+        bg                  color, #cacaca
+        color               #fff
+        line-height         24px
+        rounded             50%
+        margin-right        5px
+
+      &:first-child
+        border-left         none !important
+
+      &:last-child
+        border-right        none !important
+
+      &.current
+        bg                  color, #67A2EE
+        color               #fff
+
+        .index
+          bg                color, #fff
+          color             #67A2EE
+
+      &.completed
+        bg                  color, rgba(72,186,125,0.1)
+
+        .index
+          bg                color, #48BA7D
+
+    .alien
+      abs()
+      top                   -91px
+      r-sprite              'app' 'login_alien'
+      vendor                transition, transform .3s ease
+
+    &.instructions .alien
+      vendor                transform, translateX(90px)
+
+    &.credentials .alien
+      vendor                transform, translateX(350px)
+
+    &.buildstack .alien
+      vendor                transform, translateX(610px)
+
+    &.warning-mode
+
+      .wizard-step.current
+        bg                  color, $warningColor
+        color               #fff
+
+        .indexText
+          hidden()
+
+        .indexSign:before
+          content           '!'
+          color             #000
+          padding-left      1px
+
+
+  /* Logs pane */
+  .logs-pane
+    margin                  0 auto
+
+    .editor-main
+      bg                    color, #000
+
+    .description-view
+      height                0
+      padding               0
+      overflow              hidden
+
+    .ace_editor
+      color                 #fff
+
+
+  /* Error page coomon styles */
+  .error-page
+
+    section.main
+
+      > h2
+        color               $warningColor
+        font-size           22px
+        letter-spacing      .22px
+        line-height         43px
+        margin-bottom       -10px
+
+      > p
+        margin-top          5px
+        line-height         16px
+        height              60px
+        margin-bottom       0
+
+    .error-container
+      max-height            240px
+      width                 720px
+      margin                0 auto
+      styleScrollBars       rgba(0, 0, 0, .15)
+      border                1px solid $warningColor
+      rounded               4px
+      bg                    color, rgba(242,119,138,0.05)
+
+      &:not(.has-vertical)
+        height              auto
+
+      .error-title cite
+        abs()
+        right               20px
+
+      .error-content
+        padding             15px 15px 20px 15px
+        color               $regularColor
+        font-size           13px
+        line-height         16px
+
+        p
+          padding-top       12px
+          white-space       pre-line
+
+        pre
+          color             #444
+          padding-top       10px
+          font-size         12px
+          word-break        break-all
+          white-space       pre-wrap
+
+        ul
+          list-style-type   disc
+          padding-left      20px
+
+          li
+            padding-top     12px
+
+      &.has-vertical
+        border              1px solid $warningColor
+        rounded             5px
+
+        .error-content
+          border            none
+
+
+  /* progress bar */
+  section.main
+
+    .progressbar-wrapper
+      rel()
+      margin                0 auto
+
+    .progressbar-container
+      height                35px
+      width                 100%
+
+    .status-text
+      color                 #515151
+      ellipsis()
+      text-align            center
+      padding               0
+      abs()
+      top                   0px
+      width                 100%
+      line-height           34px
+      z-index               3
+
+
+  /* Styles for specific pages */
+  .readme-page
+
+    section.main
+
+      .kdcustomscrollview
+        height              296px
+        width               720px
+        bg                  color, #f8f8f8
+        styleScrollBars     #e0e0e0
+        rounded             4px
+        border              1px solid #e4e4e4
+        margin              0 auto
+
+        .kdscrolltrack
+          bg                color, transparent !important
+
+      .description
+        padding             20px
+        font-size           14px
+        color               #333
+
+
+  .stack-template-page
+
+    section.main
+
+      .editor-view
+        width               720px
+        height              296px
+        margin              0 auto
+        rounded             4px
+        border              1px solid #e4e4e4
+        overflow            hidden
+        borderBox()
+
+        .ace_gutter
+          border-right      1px solid #e8e8e8 !important
+
+        .ace_marker-layer
+          .ace_active-line
+            bg              color, rgb(245, 245, 245) !important
+
+        .ace_editor, .ace_gutter-layer
+          bg                color, #f8f8f8 !important
+
+        .ace_scrollbar::-webkit-scrollbar-thumb
+          bg                color, #E0E0E0 !important
+
+
+  .credentials-page
+
+    .credential-form
+      color                 #929292
+      size                  350px, 322px
+      borderBox()
+      float                 none
+      margin                0 auto
+      padding               20px 5px 0 20px
+
+      .kdcustomscrollview
+        styleScrollBars     #E0E0E0
+        max-height          268px
+        padding-right       15px !important
+
+        .kdscrolltrack.vertical
+          right             -2px
+          bg                color, transparent !important
+
+      a
+        color               #57a2d2
+        font-size           13.7px
+        text-decoration     none !important
+        font-weight         normal
+
+      h3
+        font-weight         400
+        font-size           16px
+        letter-spacing      .45px
+        margin-bottom       10px
+        padding-right       15px
+        color               #f2778a
+
+      .kdlabel
+        display             block
+        font-size           12px
+        letter-spacing      .3px
+        margin-bottom       3px
+        float               none
+        color               inherit
+        margin-top          7px
+
+      .formline:first-child .kdlabel
+        margin-top          0px
+
+      .formline .input-wrapper
+        margin-bottom       0px
+
+      .kdinput.text
+        font-size           13.7px
+        rounded             3px
+        bg                  color, #fff
+        border              1px solid #d9d9d9
+        padding             5px 13px
+
+      .validation-error
+        border              1px solid #f13a18 !important
+
+      div.kdselectbox
+        rounded             3px
+        border              1px solid #d9d9d9
+        width               306px
+
+        span.title
+          line-height       31px
+          padding           0 10px
+
+        span.arrows
+          top               8px
+          right             8px
+
+      a.create-new .plus
+        font-size           16px
+
+      a.cancel-new
+        float               right
+
+      form
+        clear               both
+
+        .advanced-field,
+        .formline.button-field .save-btn.kdbutton,
+        .formline.button-field .cancel.kdbutton
+          hidden()
+
+        &.in-advanced-mode
+          .advanced-field
+            visible()
+
+      .selection-container
+        padding-right       15px
+
+        .kdselectbox
+          width             100%
+          borderBox()
+          margin-bottom     11px
+
+        a.show-link
+          font-size         11px !important
+          fr()
+
+          &:before
+            content         'Show Details'
+
+          &.loading
+            cursor          default
+            color           #999
+            &:before
+              content       'Loading...'
+
+        .kdlabel.selection-label
+          fl()
+          margin-top        0px
+          clear             none
+
+      .kdbutton.advanced-mode-btn
+        size                140px, 32px
+        background-color    #fff
+        padding             0 10px
+        margin-bottom       20px
+        box-shadow          none
+        rounded             4px
+        border              1px solid #aaa
+        borderBox()
+        text-align          left
+
+        .button-title
+          rel()
+          color             #fff
+          font-size         14px
+          line-height       16px !important
+
+          &:before
+            content         'Advanced Mode'
+            text-transform  uppercase
+            font-size       14px
+            line-height     16px !important
+            color           #5e5e5e
+            abs()
+
+      .in-advanced-mode .kdbutton.advanced-mode-btn
+        width               185px
+
+        .button-title:before
+          content           'Close Advanced Mode'
+
+      article
+        font-size           13px
+        font-weight         300
+        color               #9f9f9f
+        line-height         19px
+        margin-bottom       15px
+
+        code
+          bg                color, #f2f2f2
+          border            1px solid #cacaca
+          borderBox()
+          color             $warningColor
+          font-weight       400
+          font-style        normal
+          font-size         12px
+          line-height       18px
+          padding           0 6px
+          rounded           4px
+
+          &.block
+            bg              color, #fff
+            color           #858585
+            line-height     20px
+            padding         8px 13px
+            margin          20px 0
+            display         block
+            rel()
+            width           310px
+
+            div
+              ellipsis()
+              width         230px
+
+            cite
+              abs           8px 13px
+
+        a
+          color             $warningColor
+          text-decoration   underline !important
+
+      .form-container
+        hidden()
+        height              268px
+
+      &.form-visible
+        .form-container
+          visible()
+
+        .selection-container
+          hidden()
+
+      &.left-form
+        fl()
+        margin-left         30px
+
+      &.right-form
+        fr()
+        margin-right        30px
+        rel()
+
+        &:before
+          content           ''
+          size              1px, 250px
+          bg                color, #e8e8e8
+          abs()
+          top               25px
+          left              -10px
+
+
+  .credentials-error-page
+
+    section.main
+      .background
+        abs()
+        bottom              0px
+        r-sprite            'app', 'buildstack__art_fail'
+
+
+  .build-stack-page
+
+    section.main
+      height                485px
+      rounded               0 0 6px 6px
+
+      .progressbar-wrapper
+        margin-top          30px
+        width               720px
+
+        .bar
+          bg                color, $warningColor
+
+    .logs-pane
+      margin-top            30px
+      width                 720px
+      max-height            360px
+      overflow              hidden
+
+      .editor-main > figure.kdview
+        height              360px !important
+
+      &.with-info
+        .editor-main > figure.kdview
+          height            270px !important
+
+    .post-build-info
+      size                  100%, 90px
+      padding               15px 25px
+      borderBox()
+      bg                    color, #f4f4f4
+      border                1px solid #c0c0c0
+      border-top            0
+      rel()
+
+      h4
+        font-size           15px
+        line-height         17px
+        color               #515151
+
+      h5
+        font-size           15px
+        line-height         17px
+        color               $regularColor
+        margin-top          4px
+
+        .warning
+          color             $warningColor
+
+      .GenericButton
+        abs()
+        top                 30px
+        right               35px
+        padding             6px 10px
+
+      .close-btn
+        r-sprite            app, modal_close
+        abs()
+        top                 10px
+        right               10px
+        pointer()
+
+
+  .build-stack-success-page
+
+    section.main
+
+      h2
+        padding-top         40px
+        padding-bottom      50px
+        font-size           28px
+        line-height         28px
+        color               #48ba7d
+
+      .background
+        abs()
+        top                 110px
+        left                50px
+        r-sprite            'app', 'buildstack__art_success_big'
+
+      .next-action
+        clear               both
+        letter-spacing      .16px
+        line-height         16px
+        padding-left        385px
+        padding-top         30px
+
+        &:first-child
+          padding-top       0px
+
+      .next-action-title
+        font-size           14px
+        color               #5e5e5e
+
+      .next-action-description
+        font-size           14px
+        color               #a59999
+        padding-top         6px
+        width               234px
+
+      .GenericButton.secondary
+        fr()
+        color               #57a2d2
+        size                110px, 36px
+        padding             0
+        margin-right        30px
+
+
+  .build-stack-timeout-page
+
+    .error-container .error-content
+
+      .error-title
+        hidden()
+
+      p
+        padding-top         0
+
+
+  .start-machine-page
+
+    section.main
+      height                390px
+
+      h2
+        color               #358bb0
+        font-size           22px
+        letter-spacing      .22px
+        line-height         43px
+        padding-top         50px
+
+      > p
+        font-size           18px
+        line-height         20px
+        letter-spacing      .19px
+        margin-bottom       44px
+
+      .GenericButton
+        margin              0 auto
+
+      .background
+        abs()
+        r-sprite            'app', 'buildstack__art_boot'
+        bottom              0
+
+
+  .start-machine-progress-page
+
+    section.main
+      height                460px
+
+      h2
+        color               #515151
+        font-size           20px
+        letter-spacing      .2px
+        line-height         43px
+        padding-top         30px
+        margin-bottom       -10px
+
+      p
+        margin-top          0
+        margin-bottom       36px
+
+      .progressbar-container
+        width               500px
+
+        .bar
+          bg                color, #67a2ee
+
+      .background
+        abs()
+        bottom              0
+        r-sprite            'app', 'buildstack__art_building'
+
+
+  .start-machine-success-page
+
+    section.main
+      height                320px
+      padding-left          300px
+      padding-top           90px
+      padding-right         20px
+
+      h2
+        color               #48ba7d
+        font-size           17px
+        letter-spacing      .17px
+        line-height         22px
+        text-align          left
+        padding-top         0
+
+      > p
+        text-align          left
+        line-height         16px
+        margin-bottom       27px
+        margin-top          8px
+
+      .background
+        abs()
+        top                 50px
+        left                40px
+        r-sprite            'app', 'buildstack__art_success'
+
+
+  .start-machine-error-page
+
+    section.main
+      min-height            390px
+
+      > h2
+        padding-top         30px
+
+      > p
+        height              65px
+
+      .error-container
+        max-height          205px
+        width               520px
+
+      .GenericButton
+        margin              40px auto 90px auto
+
+      .background
+        abs()
+        bottom              0
+        r-sprite            'app', 'buildstack__art_fail'
+
+
+  .stop-machine-progress-page
+
+    section.main
+      height                200px
+
+      h2
+        color               #515151
+        font-size           22px
+        letter-spacing      .22px
+        line-height         43px
+        padding-top         30px
+
+      .progressbar-container
+        width               500px
+        margin-top          27px
+
+        .bar
+          bg                color, #f2778a
+
+
+  .stop-machine-error-page
+
+    section.main
+      min-height            390px
+
+      > h2
+        padding-top         30px
+
+      > p
+        height              65px
+
+      .error-container
+        max-height          205px
+        width               520px
+
+      .GenericButton
+        margin              40px auto 90px auto
+
+      .background
+        abs()
+        bottom              0
+        r-sprite            'app', 'buildstack__art_fail'
+
+
+  .no-stack-page
+    width                   400px
+    height                  200px
+    borderBox()
+
+    section.main
+      padding               20px
+
+
+.credential-modal.resources
+  margin-left               128px

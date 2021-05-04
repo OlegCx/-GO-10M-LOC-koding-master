@@ -1,0 +1,25 @@
+{
+  "name": "app",
+  "main": "./lib/index.coffee",
+  "routes": {
+    "": "home",
+    "/": "home",
+    "/Teams/:token?": "teams",
+    "/Login": "login",
+    "/Register": "register",
+    "/Logout": "logout",
+    "/logout": "logout",
+    "/Reset/:token": "reset",
+    "/Shortcuts": "shortcuts",
+    "/Collaboration/:nickname/:channelId": "request-collaboration"
+  },
+  "sprites": [
+    "./lib/sprites"
+  ],
+  "styles": [
+    "./lib/styl/*.styl",
+    "./lib/styl/reactivity/*.styl",
+    "./lib/styl/terminal/*.styl",
+    "./lib/components/**/styl/*.styl"
+  ]
+}

@@ -1,0 +1,375 @@
+@css {
+/*
+Home My Team styles
+homemyteam.styl
+*/
+}
+
+.HomeAppView--section.team-settings
+  rel()
+  .hor-flex
+    justify-content         space-around
+  form
+    abs()
+    flex                    1 0 auto
+    top                     16px
+    right                   20px
+    width                   427px
+    fieldset
+      margin-top            15px
+      &.TeamUrl
+        &:after
+          content           ''
+          r-sprite          'home' 'lock'
+          abs               126px 36px
+        input.kdinput
+          opacity           .5
+      &.TeamName
+        &:after
+          content           ''
+          r-sprite          'home' 'lock'
+          abs               49px 36px
+        input.kdinput
+          opacity           .5
+
+
+      label
+        display             block
+        font-weight         300
+        font-size           12px
+        margin-bottom       10px
+
+      input.kdinput.text
+        font-size           14px
+        display             block
+        width               402px
+        height 40px
+        border              1px solid #D9D9D9
+        rounded             3px
+
+        &:hover
+          border            1px solid #D3E6FF
+        &:focus
+          border            1px solid rgba(125,190,241,1)
+
+
+    fieldset.half
+      &:first-child
+        padding-right       20px
+
+    .HomeAppView--ActionBar
+      margin-top            25px
+      .HomeAppView--button.fr
+        margin-right  24px
+
+.HomeAppView--section.permissions
+  .Permissions-Line
+    margin-bottom           20px
+    rel()
+    &:last-child
+      margin-bottom         0
+
+    .OnOffButton
+      abs                   14px 0px
+
+.HomeAppView--uploadLogo
+  height                    200px
+
+  .teamLogo-wrapper
+    cursor                  pointer
+    bg                      color, transparent
+    bg                      position, center center
+    bg                      repeat, no-repeat
+    r-sprite                app default_team_logo
+    &.member
+      r-sprite              home team_logo_default_lock
+
+
+
+  .uploadInputWrapper
+    rel()
+    overflow                hidden
+    padding                 15px 0
+    top                     7px
+    width                   120px
+    text-align              center
+    .HomeAppView--button
+      line-height           21px
+      &.primary
+        margin-left         0px
+      &.remove
+        margin-top          4px
+        &.hidden
+          opacity           0
+
+    .kdinput.file
+      z-index               0
+      opacity               0
+      abs                   -1000px 0 0 0
+
+
+.HomeAppView--section.invite-using-slack
+  rel()
+
+  .slack-oauth
+    abs()
+    right                   30px
+    top                     25px
+
+  .HomeAppView--button
+    text-transform          uppercase
+    &.inviteChannel
+      margin                12px 0 0
+    &.inviteIndividual
+      abs                   12px 0px 0
+    &.changeTeam
+      abs                   0px 0px 0
+
+  h3
+    line-height             22px
+    font-size               14px
+    font-weight             300
+    margin                  20px 0
+    rel()
+
+  .listview-wrapper
+    kalc                    height, (100% \- 51px)
+
+  .kdtabhandle
+    cite.slack
+      display               inline-block
+      vertical-align        text-bottom
+
+  .kdbutton.slack-oauth
+    .button-title
+      cite
+        r-sprite            home slack_monochrome_white
+        display             inline-block
+        vertical-align      sub
+
+  .slack-user-list
+    .kdbutton.invite-members
+      abs                   0px 0px 0 0
+
+  .slack-user-item
+    line-height             40px
+    height                  40px
+
+    a
+      color                 #5F5F5F
+      font-weight           400
+      font-size             14px
+      noTextDeco()
+
+    .kdcustomcheckbox
+      display               inline-block
+      height                20px
+      margin-right          10px
+      margin-top            6px
+
+    .name
+      display               inline-block
+      vertical-align        top
+      img
+        vertical-align      middle
+        size                24px 24px
+        rounded             2px
+
+      cite
+        font-style          italic
+        color               #7B7B7B
+
+  .invite-view
+  .members-commonview
+    height                  calc(100% \- 40px)
+
+    main
+      padding               5px 25px 5px 5px
+      borderBox()
+
+  .kdlistitemview-member
+    height                  40px
+
+    &.settings-visible
+      height                85px
+
+  .kdbutton
+
+    &.invite-members
+      margin-right          25px
+      fr()
+      &[disabled=disabled]
+        bg                  color #7B7B7B
+
+  .kdcustomscrollview.slack-invite-view
+    font-size               14px
+    color                   #3E3E3E
+
+    h3
+      color                 #7B7B7B
+      font-size             15px
+      line-height           3em
+      margin                0 0 25px
+      text-rendering        geometricPrecision
+      shadow                inset 0 -3px 0 #f2f2f2
+      margin-top            15px
+      rel()
+      &:not(:first-of-type)
+        margin-top          25px
+
+    .information
+      color                 #7b7b7b
+      .kdbutton.slack-oauth
+        margin              25px 0
+        display             block
+
+    .use-different-team
+      padding-bottom        50px
+
+  .canvas-loader
+    text-align              center
+
+
+.HomeAppView--section.send-invites
+  overflow                  hidden
+
+  .information
+    padding                 30px 0 4px
+    .invite-labels
+      label
+        width               152px
+        font-size           12px
+        font-weight         300
+        vertical-align      top
+        dIBlock()
+
+        &:first-child
+          width             242px
+        &:last-child
+          width             198px
+
+          span
+            fr()
+          .lastname
+            fl()
+
+  .HomeAppView--ActionBar
+    .uploadcsv
+      abs()
+      opacity 0
+      top -1000px
+
+  .input-wrapper
+    margin-bottom           30px
+
+  .invite-inputs
+    width                   592px
+    border-right            1px solid #D9D9D9
+    rounded                 3px
+    margin-bottom           10px
+    color                   #6B6B6B
+    borderBox()
+
+    .kdcustomcheckbox
+      top                   5px
+      size                  20px, 20px
+      abs                   11px 13px
+      dIBlock()
+      input.kdinput
+        abs()
+        font-size           0
+      label
+        z-index             1
+
+    input.kdinput
+      border                1px solid #d9d9d9
+      rounded               0
+      font-weight           300
+      font-size             13px
+      borderBox()
+
+      &:hover
+        border              1px solid #D3E6FF
+      &:focus
+        border              1px solid rgba(125,190,241,1)
+
+    input.kdinput.user-email
+      width                 242px
+      border-top-left-radius    3px
+      border-bottom-left-radius 3px
+      transition            border-color 0.5s
+
+      &.error
+        border-color        #F2778A
+
+    input.kdinput.firstname
+      width                 152px
+      border-right          none
+      border-left           none
+
+    input.kdinput.lastname
+      border-right          none
+      width                 197px
+      border-top-right-radius    3px
+      border-bottom-right-radius 3px
+      &:hover
+        border-right      1px solid #D3E6FF
+      &:focus
+        border-right      1px solid rgba(125,190,241,1)
+
+  .invite-members
+    fr()
+
+.HomeAppView--section.teammates
+  .search
+    margin-bottom           30px
+
+    > .label
+      margin-right          15px
+      font-size             14px
+      color                 #727272
+      line-height           40px
+
+    .kdselectbox
+      size                  180px 40px
+      margin-right          15px
+
+      .title
+        line-height         40px
+
+      .arrows
+        top                 13px
+
+    input
+      border                1px solid #d7d7d7
+      vertical-align        top
+      rounded               4px !important
+      height                42px
+      width                 230px !important
+      borderBox()
+
+
+
+.menu-class
+  .ButtonWithMenuItemsList
+    z-index                 10002
+
+    li
+      font-size             13px
+
+.myteam-action-wrapper
+  cursor                    pointer
+  color                     #f2778a
+  display                   flex
+  margin-left               47px
+  height                    34px
+  margin                    -10px 10px 17px 47px
+  align-items               center
+
+  .transfer-ownership-not-possible
+    .transfernotpossible
+      top 0px
+
+      &:before
+        bottom -2px
+

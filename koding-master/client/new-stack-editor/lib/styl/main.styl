@@ -1,0 +1,872 @@
+
+// FontAwesome
+$fa-font-path = 'https://netdna.bootstrapcdn.com/font-awesome/4.7.0/fonts'
+@import '../../../node_modules/font-awesome-stylus/stylus'
+
+@css {
+/*
+New Stack Editor stylesheet
+stackeditor.styl
+*/
+}
+
+$dark-panel-bg              = #2B2B30
+$dark-tab-header-bg         = #131315
+$dark-active-tab-color      = #9C9C9C
+$dark-tab-color             = #5C5C5C
+
+$resize-handle-color        = #6EA3E5
+$stack-bg-color             = #232327
+$stack-bg-color-bright      = #29292D
+$stack-fg-color             = #59595C
+$stack-fg-color-bright      = #DDDDDD
+$stack-fg-color-yellow      = #FCC34E
+$stack-border-color         = #000000
+$stack-bg-color-dark        = #111111
+
+$stack-sideview-width       = 400px
+$stack-border-width         = 2px
+
+.new-stack-editor
+
+  .flex-split
+    background              $stack-bg-color
+    vendor                  transition, all .5s ease
+
+    &.ondrag
+      vendor                transition, none
+
+    &.vertical
+      > .flex-resizer
+        width               $stack-border-width
+    &.horizontal
+      > .flex-resizer
+        height              $stack-border-width
+
+  .flex-resizer
+    background              $stack-border-color
+
+    &:hover
+    &.ondrag
+      background            $resize-handle-color
+
+  .toolbar
+    background              $stack-bg-color
+    height                  40px
+    min-height              40px !important
+    border-bottom           $stack-border-width solid $stack-border-color
+    padding                 14px
+    font-size               13px
+    color                   $stack-fg-color-bright
+    borderBox()
+
+    &:hover
+      .doc-search-input
+        width               256px
+        margin-right        128px
+
+    .action-button
+      height                26px
+      width                 100px
+      min-width             100px
+      padding-left          12px
+      abs                   7px, 6px
+      .icon
+        margin              8px 8px 0 0
+        padding             0
+        color               white
+        fa                  play
+      .kdloader
+        margin-top          -7px
+        margin-left         -5px
+
+    .menu-icon
+      fa                    caret-down
+      cursor                pointer
+      margin                0 7px 0 6px
+      color                 $dark-active-tab-color
+      height                20px
+
+    .doc-search-input
+      top                   -28px
+      width                 286px
+      height                26px
+      padding               3px 8px
+      margin-right          98px
+
+      color                 #eee
+      background            #333
+
+      border                1px solid #434343 !important
+      border-radius         2px
+      box-shadow            none !important
+
+      font-size             13px
+      vendor                transition, all .3s ease
+      fr()
+
+    .kdbutton.expand
+      abs                   13px, 120px !important
+
+    .title-input
+      padding               0
+      width                 auto
+
+      font-size             13px
+      line-height           14px
+      background            none
+      border                none
+      color                 #eee
+
+      display               inline-block
+      margin-left           10px
+      max-width             calc(100% - 360px)
+      vertical-align        middle
+
+      &:hover, &:focus
+        border              none
+        box-shadow          none
+
+    cite.stack
+      fa                    server
+
+    .tag
+      font-size             11px
+      background            #515151
+      color                 white
+      padding               1px 4px
+      box-sizing            border-box
+      font-variant          small-caps
+      margin-right          5px
+      vertical-align        top
+      cursor                pointer
+      display               inline-block
+      width                 auto
+      text-overflow         ellipsis
+      overflow              hidden
+      white-space           nowrap
+
+      &.level
+        background          #727272
+        cursor              default
+
+      &.clone
+        display             none
+
+    cite.credential
+      fa                    cog
+      margin-left           -10px
+      background            #515151
+      font-size             10px
+      width                 13px
+      height                13px
+      line-height           13px
+      vertical-align        top
+      padding-left          2px
+      color                 #fff
+      cursor                pointer
+
+    .banner
+      background            #515151
+      padding               14px
+      height                40px
+      abs                   40px, 0px
+      borderBox()
+
+      .message
+        width               auto
+        color               #fff
+        max-width           calc(100% - 140px)
+        text-overflow       ellipsis
+        overflow            hidden
+        white-space         nowrap
+        fl()
+
+      .message-button
+        margin-left         16px
+        top                 -5px
+        height              20px
+
+      .close-button
+        fa                  times
+        top                 10px
+        right               10px
+        background          none
+        border              none
+        color               white
+        abs()
+
+    &.team
+      .tag.level
+        background          #E47E8B
+
+    &.missing-credential
+      .tag.credential
+        vendor              animation, shake .6s
+
+    &.clone
+      .tag.clone
+        display             inline-block
+
+    &.has-message
+      height                80px
+      min-height            80px !important
+
+  .mainview
+    border-left             $stack-border-width solid $stack-border-color
+    border-right            $stack-border-width solid $stack-border-color
+    borderBox()
+    .toolbar, .content, .statusbar
+      opacity               1
+
+  .initial
+    .mainview
+      .toolbar, .content, .statusbar
+        opacity             0
+
+  .statusbar
+    background              $stack-border-color !important
+    height                  30px
+    min-height              30px !important
+    padding                 9px
+    font-size               12px
+    color                   $stack-fg-color
+
+    h3
+      margin-right          12px
+      fl()
+
+    .old-stack-editor
+      cursor                pointer
+      fr()
+
+
+  .flex-view
+
+    background              $stack-bg-color
+    vendor                  transition, all .5s ease
+
+    &.with-title
+      .wrapper
+        .editor, .help-content
+          height            calc(100% - 42px)
+        .preview-content
+          height            calc(100% - 42px)
+        .help-content
+          padding           0px 20px
+
+    &.ondrag
+      vendor                transition, none
+
+    &:hover, &.show-controls
+      .controls .kdbutton
+        &.expand, &.help, &.pin, &.close, &.preview
+          display           block
+
+    &.expanded
+      .controls .kdbutton
+        &.expand
+          display           none
+        &.collapse
+          display           block
+          color             $stack-fg-color-bright
+
+    &.loading
+      .wrapper .controls .kdloader
+        display             block
+
+    &.help-mode
+      .wrapper .help-content
+        display             block
+
+      .controls
+        .kdbutton.help
+          display           block
+          color             $stack-fg-color-yellow
+        .kdbutton.preview
+          display           none
+
+    &.preview-mode
+      .wrapper .preview-content
+        display             block
+
+      .controls .kdbutton.preview
+        display             block
+        color               $stack-fg-color-yellow
+
+      .wrapper .preview-content .controls
+        display             none
+
+    .wrapper
+
+      abs                   0px, 0px
+      height                inherit
+      borderBox()
+
+      > .title
+        padding             15px 20px
+        font-size           13px
+        font-weight         600
+        color               #999
+        position            static
+        z-index             7
+        background          $stack-bg-color
+        width               100%
+        borderBox()
+
+      .controls
+        abs                 10px, 15px
+        z-index             10
+        height              20px
+        display             flex
+        flex-direction      row-reverse
+
+        .kdloader
+          width             14px
+          display           none
+          top               3px
+          margin-left       10px
+
+      .help-content
+      .preview-content
+        height              100%
+        color               #999
+        padding             20px
+        display             none
+        font-size           14px
+        line-height         17px
+        overflow            auto
+        borderBox()
+
+      .help-content pre code
+        background-color    rgba(0, 0, 0, 0.37) !important
+        border              1px solid #2b2b30   !important
+
+      .preview-content
+        padding             0
+        .has-markdown
+          padding           0 20px
+          borderBox()
+
+    .controls .kdbutton
+      margin                0
+      margin-left           10px
+      padding               0
+      background            none
+      border                none
+      color                 $stack-fg-color
+      font-size             13px !important
+
+      &:focus
+        box-shadow          none
+
+      &:hover
+        color               $stack-fg-color-bright
+
+      &.expand
+        fa                  expand
+        display             none
+
+      &.collapse
+        fa                  compress
+        display             none
+
+      &.pin
+        fa                  thumb-tack
+        display             none
+
+      &.close
+        fa                  times
+        display             none
+
+      &.help
+        fa                  question-circle
+        display             none
+
+      &.preview
+        fa                  eye
+        display             none
+
+
+  .flex-view.logs
+
+    background              #29292E !important
+
+    &.shake
+      vendor                animation, shake 0.5s linear
+
+    .title
+      color                 $stack-fg-color-yellow !important
+      background            #29292E !important
+
+    .editor-main
+      .ace_editor
+        background          #29292E !important
+
+
+  .editor-view
+
+    &.focus
+      .title
+        color               #FFF
+
+    .wrapper
+      &.expanding
+        height              100vh
+      .search-view
+        bottom              -2px
+    .ace-find-replace-view
+      bottom                0
+      bg                    color, $dark-tab-header-bg
+      border-bottom-color   $dark-tab-header-bg
+      box-shadow            inset 0 -1px 0 $dark-tab-header-bg
+
+      a, input
+        border-color        $dark-panel-bg
+
+        &.active
+          border-color      $dark-panel-bg !important
+
+      input
+        bg                  color, $dark-panel-bg
+        box-shadow          0 1px 0 $dark-panel-bg
+        color               $dark-active-tab-color
+
+        &:hover
+          bg                color, $dark-panel-bg
+          border            1px solid $dark-panel-bg
+          box-shadow        0 1px 0 $dark-panel-bg
+
+        &:focus
+          bg                color, $dark-panel-bg
+          border            1px solid $dark-panel-bg
+          box-shadow        0 1px 0 $dark-panel-bg
+
+      button
+        bg                  color, $dark-panel-bg
+        color               $dark-active-tab-color
+        border              1px solid $dark-panel-bg
+
+        &:hover
+          bg                color, $dark-panel-bg
+          opacity           .8
+
+    .ace_gutter-layer
+      background-color      $stack-bg-color !important
+
+    .ace_gutter
+      border-right          1px solid #191919
+      .ace_gutter-active-line
+        background          rgba(114, 114, 114, .2) !important
+        z-index             1
+
+    .ace_marker-layer
+      .ace_active-line
+        background          #333339 !important
+
+  .side-view
+    background              $stack-bg-color
+    width                   $stack-sideview-width
+    min-width               $stack-sideview-width
+    abs                     0px, 0px
+    z-index                 100
+    box-shadow              0 0 30px -5px
+    vendor                  transition, all 400ms ease-in
+    border-left             $stack-border-width solid $stack-border-color
+    visibility              visible
+    vendor                  transition, none
+    borderBox()
+
+    &.hidden
+      display               block !important
+      visibility            hidden
+      width                 0px
+      min-width             0px
+
+    &.expanded
+      width                 100%
+      min-width             100%
+      border-left           none
+      .docs-view
+        .docs-content
+          display           block !important
+
+    &.pinned
+      position              inherit
+      box-shadow            none
+      .docs-view
+        border-left           $stack-border-width solid $stack-border-color
+
+      .controls .kdbutton.pin
+        display             block
+        color               $stack-fg-color-yellow
+
+    .controls .kdbutton.plus
+      fa                    plus
+      color                 $stack-fg-color-yellow
+      display               none
+
+
+  .side-view
+
+    .kdscrolltrack.vertical
+      right                 -10px
+
+    .kdscrolltrack.horizontal
+      bottom                -10px
+
+    .kdcustomscrollview.has-vertical
+      padding-right         0
+
+    .kdcustomscrollview.has-vertical
+      padding-bottom        0
+
+    .kdscrollthumb
+      background-color      #444
+
+
+  .credentials
+
+    .controls .kdbutton.plus
+      display               block
+
+    .listview-wrapper
+      height                calc(100% \- 42px)
+
+      .lazy-loader
+        display             none
+
+      .selection-view
+        width               auto
+        height              auto
+        min-width           $stack-sideview-width
+        color               #fff
+        font-size           12px
+        padding             8px 15px 5px 20px
+        background          #3c3c3c
+        z-index             10
+        borderBox()
+
+        b
+          font-weight       600
+
+        cite
+          fa                times
+          cursor            pointer
+          fr()
+
+    .button-field
+      border                none
+      bottom                30px
+      padding               10px 20px !important
+      background            $stack-bg-color-dark
+      z-index               10
+      position              fixed
+      right                 0
+      min-width             $stack-sideview-width
+      borderBox()
+
+      .kdbutton
+        span.kdloader
+          left              40% !important
+          top               25% !important
+
+
+  .credential-list
+    width                   inherit
+    min-width               $stack-sideview-width - $stack-border-width - 2
+
+    &.has-change
+      padding-bottom        55px
+      .status-view
+        display             block
+
+    .status-view
+      height                55px
+      width                 100%
+      position              fixed
+      bottom                30px
+      background            $stack-bg-color-dark
+      z-index               7
+      display               none
+
+    .save-button
+    .revert-button
+      position              fixed
+      bottom                42px
+      right                 15px
+      z-index               10
+
+    .revert-button
+      right                 150px
+
+    .add-big-btn
+      top                   20px
+      left                  50%
+      width                 172px
+      margin-left           -86px
+      display               block
+
+    .kdinput.checkbox
+      opacity               .5
+      margin-right          5px
+
+      &:checked
+        opacity             1
+
+
+    .kdlistitemview.credential
+      font-size             14px
+      padding               10px 15px 10px 20px
+      color                 $stack-fg-color-bright
+      border-bottom         1px solid #333
+      cursor                default
+      borderBox()
+
+      &:hover
+      &.selected
+        background          $stack-bg-color-bright
+        .kdinput.checkbox
+          opacity           1
+
+      .kdcustomcheckbox
+        margin              -4px 5px -3px -3px
+        transform           scale(.7)
+        fl()
+
+        label
+          border-color      #333333
+          background-color  #2b2b30
+
+      button
+        margin              0
+        margin-left         8px
+        padding             0
+        background          none
+        border              none
+        color               $stack-fg-color
+        fr()
+
+        &.show
+          fa                eye
+
+        &.edit
+          fa                pencil
+
+        &.delete
+          fa                trash
+
+      .provider
+        padding             2px 3px
+        margin              2px 5px 0 0
+        font-size           10px
+        border-radius       2px
+        color               #FFF
+        text-shadow         0px 0px 1px #000
+        cursor              pointer
+        fr()
+
+
+  .add-credential-scroll
+    top                     44px
+    background              $stack-bg-color
+    min-width               $stack-sideview-width
+    font-size               13px
+    color                   $stack-fg-color
+    border-bottom           93px solid $stack-bg-color-dark
+    abs()
+
+    .kdformview
+
+      margin-top            50px
+
+      .advanced-field
+        display             none
+
+      &.in-advanced-mode
+        .advanced-field
+          display           block
+
+    .formline
+      padding               0 20px
+
+      &.help-line
+        margin-left         130px
+
+      label
+        min-width           110px
+        line-height         13px
+        margin-top          8px
+        margin-right        20px
+        text-align          right
+
+      input, textarea
+        padding             2px 6px
+        font-size           13px
+        border-radius       4px
+
+      .kdselectbox
+        width               100%
+        height              28px
+        border-radius       4px
+        borderBox()
+
+        .title
+          line-height       28px
+          padding           0 40px 0 5px
+
+        .arrows
+          top               6px
+
+      .validation-error
+        border              1px solid #963624
+        background          #423133
+
+    .credential-creation-intro
+      padding               20px
+      background            $stack-bg-color-dark
+      margin-top            30px
+      margin-bottom        -30px
+      borderBox()
+
+
+  .stack-menu.kdcontextmenu
+
+    box-shadow              0px 0px 30px rgba(0,0,0,.4)
+
+    ul
+      bg                    color, dark-tab-header-bg !important
+      padding               2px !important
+      rounded               0 !important
+
+    li
+      color                 #E6E1DC !important
+      rounded               0 !important
+
+      &:hover
+        bg                  color, dark-panel-bg !important
+
+      &.selected
+        bg                  color, dark-panel-bg !important
+
+    > span.arrow.bottom
+      margin-top            -2px
+      border-top-color      #131313
+      border-left-color     transparent !important
+
+    > span.arrow.top
+      margin-top            -2px
+      border-bottom-color   #131313
+      border-left-color     transparent !important
+
+    span.arrow
+      border-left-color     #fff !important
+
+    .kdlistview-contextmenu.default
+      bg                    color #131313
+      rel()
+
+    .kdlistitemview-contextitem
+      font-size             .8em
+      line-height           1.4em
+      color                 #aaa
+      padding               6px 10px
+      text-overflow         ellipsis
+      overflow              hidden
+      pointer()
+      borderBox()
+
+      &.separator
+        padding             0
+        &:last-child
+          border-bottom     none
+
+      &.selected
+      &.active
+        color               white
+        bg                  color, #131313 !important
+
+      &.disabled
+      &.selected.disabled
+        color               #aaa
+        pointer-events      none
+
+      &:hover
+        background-color    #2b2b2b !important
+
+
+    .kdlistitemview-contextitem.default.separator
+      border-bottom         1px solid #444
+
+
+  .stack-menu
+
+    top                     40px !important
+    margin-left            -20px
+
+  .documentation
+
+    max-width               1000px !important
+    min-width               400px !important
+
+    .docs-view
+
+      >.listview-wrapper
+        max-width           398px
+        fl()
+
+      .docs-content
+        width               calc(100% \- 398px)
+        padding             10px
+        border-right        1px solid #111
+        color               #999
+        overflow-y          auto
+        display             none !important
+        borderBox()
+        fl()
+
+        hr
+          background        #111
+
+        code
+          border            none !important
+
+        pre code
+          background-color  rgba(0, 0, 0, 0.37) !important
+          border            1px solid #2b2b30   !important
+          overflow          auto
+
+
+    .kdlistview
+      .no-item-found
+        padding-top         42px
+
+    .kdlistitemview
+      padding               4px 10px 8px 10px
+      border-bottom         1px solid #333
+      box-sizing            border-box
+      min-width             398px
+      color                 #999
+
+      &:hover
+      &.selected
+        background          #333
+
+      &.selected
+        background          #333
+        color               white !important
+        span
+          color             white
+
+      h3
+        font-size           14px
+        display             block
+
+      span
+        font-size           12px
+        color               #666
+
+#kdmaincontainer.hover
+#kdmaincontainer.collapsed
+  .toolbar .kdbutton.expand
+    fa                      compress

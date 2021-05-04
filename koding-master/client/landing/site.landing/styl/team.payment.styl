@@ -1,0 +1,69 @@
+@import "lib/core.fn"
+
+form.cc-form
+
+  input::-webkit-input-placeholder
+    letter-spacing          1px
+    font-size               24px
+
+  input:-moz-placeholder
+    letter-spacing          1px
+    font-size               24px
+
+  .TeamsModal-ccwarning
+    bg                      color #F6FCF9
+    color                   #989898
+    shadow                  0 0 0 1px rgba(0,0,0,.05)
+    padding                 15px 40px
+    margin                  19px 0 30px -40px
+    line-height             1.4em
+    width                   100%
+    contentBox()
+    strong
+      display               block
+      color                 #42BB7B
+
+  .form-group .login-input-view
+    input
+      background            #fff
+
+  .login-input-view.exp-year
+    &:before
+      content               '20'
+      abs                   26px 0 0 17px
+      display               block
+      z-index               2
+      font-size             18px
+      color                 rgba(0,0,0,.4)
+    input.kdinput.text
+      padding-left          38px
+
+.cc-form-errorView
+  margin                    -40px -40px 40px
+  color                     #989898
+  background-color          rgba(242, 119, 138, 0.05)
+  border-bottom             1px solid rgba(0,0,0,0.05)
+  padding                   15px 40px
+  line-height               1.4em
+  contentBox()
+
+  > h4
+    color                   rgba(242, 119, 138, 1)
+    font-weight             bold
+
+  > h5
+    font-size               12px
+
+.cc-form-resetLink a
+  display                   block
+  padding                   20px 0 40px
+  font-size                 18px
+
+$disabledOpacity = .5
+
+.cc-form input[disabled=disabled]
+  opacity                   $disabledOpacity
+  cursor                    not-allowed
+  -webkit-text-fill-color   rgba(74, 74, 74, 1)
+  & ~ .placeholder-helper
+    opacity                 $disabledOpacity

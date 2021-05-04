@@ -1,0 +1,74 @@
+@css {
+/*
+Home Section styles
+*/
+}
+
+.HomeAppView--section
+  font-weight               100
+  margin                    0 48px 30px
+  border                    1px solid #D0D0D0
+  bg                        color, white
+  padding                   32px
+  border-radius             4px
+  borderBox()
+  &:first-child
+    margin-top              36px
+
+  p
+  .HomeAppView--sectionWrapper
+    line-height             25px
+    color                   #9F9F9F
+    font-weight             300
+    font-size               14px
+    letter-spacing          .2px
+
+  input.kdinput
+    kalc                    width, 100% \- 130px
+    bg                      color, transparent
+    display                 inline-block
+
+  .HomeAppView--button.primary
+    margin-left             30px
+    transition              opacity 0.5s
+
+    &.inactive
+      opacity               0.4
+      pointer-events        none
+
+  .HomeAppView--button.fr
+    margin-left             30px
+
+
+.HomeAppView--sectionHeader
+
+  margin                    0 48px 30px
+  border-bottom             none
+
+  a
+    font-size               14px
+    line-height             19px
+    color                   #747474
+    noTextDeco()
+
+  &:first-child
+    margin-top              36px
+
+  .anchor
+    display                 inline-block
+    margin-left             -22px
+    margin-top              2px
+    visibility              hidden
+    abs()
+
+  &:hover
+    .anchor
+      visibility            visible
+
+  &:active
+    .anchor
+      visibility            hidden
+
+.HomeAppView--ActionBar
+  line-height               25px
+  margin                    20px 0 0

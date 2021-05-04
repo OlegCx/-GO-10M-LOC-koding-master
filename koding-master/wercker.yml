@@ -1,0 +1,318 @@
+box: koding/base@0.1.7
+no-response-timeout: 10
+services:
+  - userminddeployer/postgresql9.3@0.0.7-usermind-9.3-1
+  - wercker/rabbitmq@1.0.1
+  - wercker/redis@0.0.8
+  - wercker/mongodb@1.0.1
+
+build:
+  steps:
+    - add-ssh-key:
+        keyname: DEPLOYMENT_KEY_V2
+    - script:
+        name: setup git identity
+        code: |
+          git config --global user.email 'sysops@koding.com'
+          git config --global user.name 'Koding Bot'
+    - script:
+        name: fetch pull requests
+        code: |
+          git config --add remote.origin.fetch '+refs/pull/*/head:refs/remotes/origin/pull/*'
+          git fetch --force --quiet origin
+    - script:
+        name: create version file
+        code: $WERCKER_ROOT/scripts/create_version.sh
+    - script:
+        name: build started
+        code: |
+          scripts/notify-cebeci.sh "build" "<$WERCKER_BUILD_URL|build> of $WERCKER_GIT_BRANCH is in progress" "building" 10
+    - script:
+        name: check package.json files
+        code: scripts/check_package_json_constraints.sh
+    - script:
+        name: setup nvm
+        code: |
+          source $HOME/.nvm/nvm.sh
+          nvm use 6
+    - script:
+        name: node modules
+        code: |
+          scripts/wercker/install-node-modules koding
+          npm install
+          scripts/wercker/update-node-modules
+    - script:
+        name: notify cebeci
+        code: |
+          scripts/notify-cebeci.sh "build" "<$WERCKER_BUILD_URL|build> of $WERCKER_GIT_BRANCH - build preparation finished" "building" 30
+    - script:
+        name: copy deployment credentials
+        code: scripts/copy-deployment-credentials.sh
+    - script:
+        name: change mod of test instace private key
+        code: chmod 600 ./scripts/test-instance/koding-test-instances-2015-06.pem
+    - mktemp:
+        envvar: INSTANCE_IP
+    - script:
+        name: create data files
+        code: touch INSTANCE_DATA
+    - script:
+        name: run coffeelint
+        code: scripts/wercker/run-command node_modules/coffeelint/bin/coffeelint --quiet .
+    - script:
+        name: check configs
+        code: |
+          ./configure --config sandbox
+          ./configure --config prod
+    - script:
+        name: configure build
+        code: |
+          # dev build is here just for creating dev.toml for socialapi
+          ./configure --config dev     --projectRoot $WERCKER_SOURCE_DIR --ebEnvName $EB_ENV_NAME --version $(cat $WERCKER_ROOT/VERSION)
+          ./configure --config sandbox --projectRoot $WERCKER_SOURCE_DIR --ebEnvName $EB_ENV_NAME --version $(cat $WERCKER_ROOT/VERSION)
+    - script:
+        name: launch test hosts
+        code: |
+          scripts/wercker/run-command ./run exec scripts/wercker/launch-test-hosts | tee INSTANCE_DATA
+    - script:
+        name: check api consistency
+        code: scripts/wercker/run-command ./run exec scripts/api-generator.coffee --check
+    - script:
+        name: build client
+        code: |
+          make -C client dist
+          scripts/notify-cebeci.sh "build" "<$WERCKER_BUILD_URL|build> of $WERCKER_GIT_BRANCH - build client finished" "building" 35
+    - wercker/s3sync@2.0.3:
+        source-dir: website/a/p/p/$(cat VERSION)/
+        bucket-url: s3://koding-assets/a/p/p/$(cat VERSION)/
+        key-id: $S3_KEY_ID
+        key-secret: $S3_KEY_SECRET
+        opts: "--no-mime-magic --guess-mime-type --acl-public"
+    - script:
+        name: build go binaries
+        code: go/build.sh
+    - script:
+        name: test go koding config
+        code: scripts/wercker/run-command ./run exec ./scripts/gotests.sh kites koding/kites/config
+    - script:
+        name: ensure JSON and generated files in go/src/koding are not stale
+        code: scripts/check-generated-files.sh
+    - script:
+        name: test klient
+        code: scripts/wercker/run-command scripts/test-klient.sh
+    - script:
+        name: test kd
+        code: scripts/wercker/run-command scripts/test-kd.sh
+    - script:
+        name: test kites
+        code: scripts/wercker/run-command go/src/koding/kites/e2etest/e2etest.sh
+    - script:
+        name: test kloud
+        code: scripts/wercker/run-command ./scripts/gotests.sh kites koding/kites/kloud/provider/... koding/kites/kloud/credential/... koding/kites/kloud/stack/... koding/kites/kloud/kloud/...
+    - script:
+        name: test koding/api
+        code: scripts/wercker/run-command ./scripts/gotests.sh koding/api/...
+    - script:
+        name: build backend finished
+        code: scripts/notify-cebeci.sh "build" "<$WERCKER_BUILD_URL|build> of $WERCKER_GIT_BRANCH - build backend finished" "building" 40
+    - script:
+        name: check social api code quality
+        code: scripts/wercker/run-command scripts/check_socialapi_code_quality.sh
+    - script:
+        name: check go codes with gometalinter
+        code: scripts/wercker/run-command scripts/gometalinter.sh
+    - script:
+        name: check client code quality
+        code: scripts/wercker/run-command scripts/check_client_code_quality.sh
+    - script:
+        name: testing backend started
+        code: scripts/notify-cebeci.sh "build" "<$WERCKER_BUILD_URL|build> of $WERCKER_GIT_BRANCH - test backend started" "building" 41
+    - script:
+        name: create postgresql tables
+        code: scripts/wercker/run-command scripts/wercker/create-postgresql-tables
+    - script:
+        name: prepare test data
+        code: scripts/wercker/run-command go run go/src/socialapi/workers/cmd/migrator/main.go -c go/src/socialapi/config/dev.toml
+    - script:
+        name: test social api
+        code: scripts/wercker/run-command scripts/wercker/test-social-api
+    - script:
+        name: test koding mongo models
+        code: scripts/wercker/run-command ./run exec go test koding/db/mongodb/modelhelper
+    - script:
+        name: test kontrol
+        code: scripts/wercker/run-command ./scripts/gotests.sh koding/kites/kontrol/kontrol
+    - script:
+        name: testing backend finished
+        code: |
+          scripts/notify-cebeci.sh "build" "<$WERCKER_BUILD_URL|build> of $WERCKER_GIT_BRANCH - test backend finished" "building" 45
+    - script:
+        name: send test coverages
+        code: bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN -X gcov -X fix
+    - script:
+        name: delete deployment credentials
+        code: |
+          [ "$CONFIG" != "prod" ] && scripts/delete-deployment-credentials.sh
+    - script:
+        name: check connectivity
+        code: |
+          scripts/wercker/run-command ./run exec scripts/test-instance/check-connectivity INSTANCE_DATA
+    - script:
+        name: test nodejs
+        code: scripts/wercker/run-command scripts/node-testing/run-tests INSTANCE_DATA
+    - script:
+        name: testing client started
+        code: |
+          scripts/notify-cebeci.sh "build" "<$WERCKER_BUILD_URL|build> of $WERCKER_GIT_BRANCH - test client started" "building" 46
+    - script:
+        name: run test suites
+        code: scripts/wercker/run-command scripts/ci/run-tests INSTANCE_DATA
+    - script:
+        name: testing client finished
+        code: |
+          scripts/notify-cebeci.sh "build" "<$WERCKER_BUILD_URL|build> of $WERCKER_GIT_BRANCH - test client finished" "building" 85
+  after-steps:
+    - script:
+        name: test suite timeline breakdown
+        code: |
+          cat TEST_SUITE_TIMELINE || :
+    - script:
+        name: setup nvm
+        code: |
+          source $HOME/.nvm/nvm.sh
+          nvm use 6
+    - script:
+        name: upload logs
+        code: |
+          [[ "$WERCKER_RESULT" == 'failed' ]] && ./run exec scripts/test-instance/upload-logs INSTANCE_DATA $WERCKER_BUILD_ID || exit 0
+    - script:
+        name: cleanup
+        code: ./run exec scripts/wercker/cleanup INSTANCE_DATA
+    - jessefulton/slack-notify:
+        subdomain: koding
+        token: $SLACK_TOKEN
+        channel: announce
+        username: wercker
+        icon_url: https://avatars3.githubusercontent.com/u/1695193?s=140
+    - script:
+        name: build finished
+        code: |
+          scripts/notify-cebeci.sh "build" "<$WERCKER_BUILD_URL|build> of $WERCKER_GIT_BRANCH is $WERCKER_RESULT " $WERCKER_RESULT 100
+    - script:
+        name: cat socialapi
+        code: |
+          tail -n 1000 /var/log/koding/social-api.log || :
+          tail -n 100 /var/log/koding/social-populartopic.log || :
+          tail -n 100 /var/log/koding/social-pinnedpost.log || :
+          tail -n 100 /var/log/koding/social-webhook.log || :
+          tail -n 100 /var/log/koding/social-webhookmiddleware.log || :
+deploy:
+  steps:
+    - add-ssh-key:
+        keyname: DEPLOYMENT_KEY_V2
+    - script:
+        name: deploy started
+        code: |
+          $WERCKER_ROOT/scripts/notify-cebeci.sh "deploy" "<$WERCKER_DEPLOY_URL|deploy> of $WERCKER_GIT_BRANCH started" "deploying" 5
+    - script:
+        name: create version file
+        code: |
+          $WERCKER_ROOT/scripts/create_version.sh
+    - script:
+        name: setup nvm
+        code: |
+          source $HOME/.nvm/nvm.sh
+          nvm use 6
+    - script:
+        name: copy deployment credentials
+        code: scripts/copy-deployment-credentials.sh
+    - script:
+        name: build application
+        code: |
+          cd $WERCKER_ROOT
+
+          ./configure --without-envvars --config $CONFIG --projectRoot /opt/koding --ebEnvName $EB_ENV_NAME --version $(cat $WERCKER_ROOT/VERSION)
+
+          make -C client dist
+    - script:
+        name: zip
+        code: |
+          cd $WERCKER_ROOT
+
+          rm -rf .git .build node_modules client/node_modules client/builder/node_modules client/landing/node_modules client/.sprites
+          rm -rf go/bin go/pkg
+          zip -q --symlinks -r $(cat $WERCKER_ROOT/ARCHIVE_NAME) . || :
+
+          $WERCKER_ROOT/scripts/notify-cebeci.sh "deploy" "created deploy file $ARCHIVE" "deploying" 45
+    - script:
+        name: delete deployment credentials
+        code: scripts/delete-deployment-credentials.sh
+    - koding/eb-deploy@0.31.0:
+        access-key: $S3_KEY_ID
+        secret-key: $S3_KEY_SECRET
+        app-name: koding
+        env-name: $EB_ENV_NAME
+        version-label: $(cat $WERCKER_ROOT/ARCHIVE_NAME)
+        region: $EB_ENV_REGION
+        s3-bucket: $S3_EB_DEPLOY-$EB_ENV_REGION
+        s3-key: $(cat $WERCKER_ROOT/ARCHIVE_NAME)
+    - script:
+        name: notify-cebeci with eb trigger
+        code: |
+          $WERCKER_ROOT/scripts/notify-cebeci.sh "deploy" "triggered $EB_ENV_NAME EB" "deploying" 95
+
+  after-steps:
+    - jessefulton/slack-notify:
+        subdomain: koding
+        token: $SLACK_TOKEN
+        channel: announce
+        username: wercker
+        icon_url: https://avatars3.githubusercontent.com/u/1695193?s=140
+    - script:
+        name: notify-cebeci with result
+        code: |
+          $WERCKER_ROOT/scripts/notify-cebeci.sh "deploy" "wercker is done with the <$WERCKER_DEPLOY_URL|deploy> of $WERCKER_GIT_BRANCH result: $WERCKER_RESULT" $WERCKER_RESULT 100
+
+  s3-klient-production:
+    - script:
+        name: deploy klient to production channel
+        code: $WERCKER_ROOT/scripts/deploy-klient.sh
+
+  s3-klient-development:
+    - script:
+        name: deploy klient to development channel
+        code: $WERCKER_ROOT/scripts/deploy-klient.sh
+
+  s3-kd-production:
+    - script:
+        name: deploy kd to production channel
+        code: $WERCKER_ROOT/scripts/deploy-kd.sh
+
+  s3-kd-development:
+    - script:
+        name: deploy kd to development channel
+        code: $WERCKER_ROOT/scripts/deploy-kd.sh
+
+  s3-klient-managed:
+    - script:
+        name: deploy klient to managed channel
+        code: $WERCKER_ROOT/scripts/deploy-klient.sh
+
+  s3-klient-devmanaged:
+    - script:
+        name: deploy klient to devmanaged channel
+        code: $WERCKER_ROOT/scripts/deploy-klient.sh
+
+  s3-klient-and-kd-production:
+    - script:
+        name: deploy klient to managed channel and kd to production
+        code: |
+          $WERCKER_ROOT/scripts/deploy-klient.sh
+          $WERCKER_ROOT/scripts/deploy-kd.sh
+
+  s3-klient-and-kd-development:
+    - script:
+        name: deploy klient to devmanaged channel and kd to development
+        code: |
+          $WERCKER_ROOT/scripts/deploy-klient.sh
+          $WERCKER_ROOT/scripts/deploy-kd.sh

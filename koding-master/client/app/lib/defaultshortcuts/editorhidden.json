@@ -1,0 +1,90 @@
+[
+    {
+      "name": "golineup",
+      "binding": [
+        [
+          "up"
+        ],
+        [
+          "up"
+        ]
+      ]
+    },
+    {
+      "name": "golinedown",
+      "binding": [
+        [
+          "down"
+        ],
+        [
+          "down"
+        ]
+      ]
+    },
+    {
+      "name": "gotoleft",
+      "binding": [
+        [
+          "left"
+        ],
+        [
+          "left"
+        ]
+      ]
+    },
+    {
+      "name": "gotoright",
+      "binding": [
+        [
+          "right"
+        ],
+        [
+          "right"
+        ]
+      ]
+    },
+    {
+      "name": "gotopagedown",
+      "binding": [
+        [
+          "pagedown"
+        ],
+        [
+          "pagedown"
+        ]
+      ]
+    },
+    {
+      "name": "gotopageup",
+      "binding": [
+        [
+          "pageup"
+        ],
+        [
+          "pageup"
+        ]
+      ]
+    },
+    {
+      "name": "gotolinestart",
+      "binding": [
+        [
+          "home"
+        ],
+        [
+          "command+left"
+        ]
+      ]
+    },
+    {
+      "name": "gotolineend",
+      "binding": [
+        [
+          "end"
+        ],
+        [
+          "command+right"
+        ]
+      ]
+    }
+]

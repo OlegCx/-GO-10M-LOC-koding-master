@@ -1,0 +1,33 @@
+#!/usr/bin/env coffee
+
+fs    = require 'fs'
+path  = require 'path'
+Bongo = require 'bongo'
+
+minimist = require 'minimist'
+opts = {
+  alias: { 'f': 'file' }
+  string: ['f', 'file']
+}
+
+argv = minimist process.argv.slice(2), opts
+
+unless root = process.env.KONFIG_PROJECTROOT
+  root = path.join __dirname, '..'
+
+models = 'workers/social/lib/social/models'
+
+generate = (callback) ->
+  new Bongo { root, models }
+    .on 'apiReady', ->
+      @describeApi callback
+
+if require.main is module
+  generate (res) ->
+    schema = JSON.stringify res, null, 2
+    if argv.file
+    then fs.writeFileSync argv.file, schema
+    else process.stdout.write "#{schema}\n"
+    process.exit 0
+
+module.exports = generate

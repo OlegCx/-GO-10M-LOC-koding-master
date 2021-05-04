@@ -1,0 +1,156 @@
+#!/usr/bin/env coffee
+
+fs   = require 'fs'
+argv = require('minimist')(process.argv.slice(2))
+
+KONFIG = require 'koding-config-manager'
+
+unless KONFIG.test?.credentials?.AWS
+  console.error 'error: test aws credentials are not set'
+  process.exit 1
+
+{
+  subnetId
+  securityGroupId
+  keyName
+} = KONFIG.test.credentials.AWS
+
+unless subnetId
+  console.error 'error: subnet id is not set'
+  process.exit 1
+
+unless securityGroupId
+  console.error 'error: security group id is not set'
+  process.exit 1
+
+unless keyName
+  console.error 'error: key name is not set'
+  process.exit 1
+
+AWS = require './aws'
+EC2 = new AWS.EC2()
+R53 = new AWS.Route53()
+
+unless revision = argv.commit
+  revision = try
+    require('git-rev-sync').long()
+  catch
+    'FETCH_HEAD'
+
+if argv['pull-request']
+  refspec = "+refs/pull/#{argv['pull-request']}/head"
+
+git_fetch    = "git fetch origin #{refspec or ''}"
+git_checkout = "git checkout -fq #{revision}"
+
+git_clone_vault = (branch = 'master') ->
+  "git clone --branch #{branch} --depth 1 git@github.com:koding/vault.git"
+
+argv.count ?= require('./parallel-sets').length
+
+if typeof argv.count isnt 'number'
+  console.error 'error: Non-number value is given as instance count'
+  process.exit 1
+
+userData =
+  """
+  #cloud-config
+  disable_root: false
+  hostname: wercker-test-instance
+
+  runcmd:
+    - echo 127.0.0.1 `hostname` >> /etc/hosts
+    - echo 127.0.0.1 freegeoip.net >> /etc/hosts
+    - ip -s -s neigh flush all
+    - cd /opt/koding
+    - #{git_fetch}
+    - #{git_checkout}
+    - rm -rf ./vault # delete vault folder if exists
+    - #{git_clone_vault argv['branch']} || #{git_clone_vault()}
+    - git submodule update --recursive
+    - /opt/koding/scripts/test-instance/init
+  """
+
+params =
+  ImageId          : (require './ami').id
+  InstanceType     : 'm4.large'
+  MinCount         : argv.count
+  MaxCount         : argv.count
+  SubnetId         : subnetId
+  SecurityGroupIds : [securityGroupId]
+  KeyName          : keyName
+  UserData         : new Buffer(userData).toString 'base64'
+
+InstanceIds = []
+RunningInstances = []
+
+monitorInterval = null
+
+
+EC2.runInstances params, (err, data) ->
+
+  if err
+    console.error JSON.stringify err
+    process.exit 1
+    return
+
+  data.Instances.forEach ({InstanceId}) -> InstanceIds.push InstanceId
+  tag()
+  monitorInterval = setInterval monitor, 5000
+
+
+tag = ->
+
+  refspec = switch
+    when argv['pull-request']
+      "pr-#{argv['pull-request']}"
+    when argv['commit']
+      "rv-#{argv['commit'].substring 0, 7}"
+    else "rv-#{revision}"
+
+  Resources = InstanceIds
+
+  Tags = []
+  addTag = (Key, Value) -> Tags.push { Key, Value }
+  addTag 'Name', "test-#{refspec}"
+  addTag 'Role', 'test-instance'
+
+  EC2.createTags { Resources, Tags }, (err, res) ->
+
+
+monitor = ->
+
+  EC2.describeInstances {InstanceIds}, (err, data) ->
+    return console.error JSON.stringify err  if err
+    data.Reservations.forEach checkInstances
+
+
+checkInstances = ({Instances}) ->
+
+  Instances.forEach checkInstanceState
+  if RunningInstances.length is InstanceIds.length
+    exit()
+
+
+checkInstanceState = (Instance) ->
+
+  for RunningInstance in RunningInstances \
+    when Instance.InstanceId is RunningInstance.InstanceId
+      return
+
+  if Instance.State.Name is 'running'
+    RunningInstances.push Instance  if Instance
+
+
+exit = ->
+
+  clearInterval monitorInterval
+  printInstanceInfo()
+  process.exit()
+
+
+printInstanceInfo = ->
+
+  RunningInstances.forEach (Instance) ->
+    {InstanceId, PublicIpAddress} = Instance
+    console.log InstanceId, PublicIpAddress

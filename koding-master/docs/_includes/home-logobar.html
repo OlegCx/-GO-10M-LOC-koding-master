@@ -1,0 +1,20 @@
+<div class='Homepage-LogoBar{% if include.cssClass %} {{ include.cssClass }}{% endif %}'>
+  {% assign logos = include.logos | split: "||" %}
+  {% if include.title %}
+  <h3>{{ include.title }}</h3>
+  {% endif %}
+ <div class='Homepage-LogoBar--logos'>
+  {% for logoData in logos %}
+    {% assign logo = logoData | strip | split: "--" %}
+    {% assign name = logo[0] %}
+    {% assign src = logo[1] | prepend: include.path | prepend: site.url %}
+    {% assign width = logo[2] %}
+    {% assign height = logo[3] %}
+    <img
+      src="{{ src }}"
+      {% if width %}width="{{ width }}px"{% endif %}
+      {% if height %}height="{{ height }}px"{% endif %}
+      alt="{{ name }}"/>
+  {% endfor %}
+  </div>
+</div>

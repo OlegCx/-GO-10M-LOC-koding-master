@@ -1,0 +1,10 @@
+---
+platform: linux
+image: docker:///zhanggongsw/bosh
+
+inputs:
+  - name: softlayer-go
+    path: gopath/src/github.com/maximilien/softlayer-go
+
+run:
+  path: gopath/src/github.com/maximilien/softlayer-go/bin/test-integration

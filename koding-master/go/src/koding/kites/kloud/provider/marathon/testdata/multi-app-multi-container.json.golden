@@ -1,0 +1,166 @@
+{
+  "resource": {
+    "marathon_app": {
+      "multi-app": {
+        "app_id": "/multi-app/multi-app-user-ident-${count.index + 1}",
+        "container": [
+          {
+            "docker": [
+              {
+                "image": "python:3",
+                "network": "BRIDGE",
+                "parameters": {
+                  "parameter": [
+                    {
+                      "key": "entrypoint",
+                      "value": "/mnt/mesos/sandbox/entrypoint.${count.index * 3 + 1}.sh"
+                    }
+                  ]
+                },
+                "port_mappings": {
+                  "port_mapping": [
+                    {
+                      "container_port": 56789,
+                      "host_port": 0,
+                      "protocol": "tcp"
+                    }
+                  ]
+                }
+              },
+              {
+                "image": "ubuntu:14.04",
+                "network": "BRIDGE",
+                "parameters": {
+                  "parameter": [
+                    {
+                      "key": "entrypoint",
+                      "value": "/mnt/mesos/sandbox/entrypoint.${count.index * 3 + 2}.sh"
+                    }
+                  ]
+                },
+                "port_mappings": {
+                  "port_mapping": [
+                    {
+                      "container_port": 56789,
+                      "host_port": 0,
+                      "protocol": "tcp"
+                    }
+                  ]
+                }
+              },
+              {
+                "image": "centos:7",
+                "network": "BRIDGE",
+                "parameters": {
+                  "parameter": [
+                    {
+                      "key": "entrypoint",
+                      "value": "/mnt/mesos/sandbox/entrypoint.${count.index * 3 + 3}.sh"
+                    }
+                  ]
+                },
+                "port_mappings": {
+                  "port_mapping": [
+                    {
+                      "container_port": 56789,
+                      "host_port": 0,
+                      "protocol": "tcp"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "count": 3,
+        "cpus": 2,
+        "env": {
+          "KODING_KLIENT_URL": "$KLIENT_URL",
+          "KODING_METADATA_1": "***",
+          "KODING_METADATA_2": "***",
+          "KODING_METADATA_3": "***",
+          "KODING_METADATA_4": "***",
+          "KODING_METADATA_5": "***",
+          "KODING_METADATA_6": "***",
+          "KODING_METADATA_7": "***",
+          "KODING_METADATA_8": "***",
+          "KODING_METADATA_9": "***"
+        },
+        "fetch": [
+          {
+            "cache": true,
+            "executable": false,
+            "uri": "$SCREEN_URL"
+          },
+          {
+            "cache": true,
+            "executable": false,
+            "uri": "$CERT_URL"
+          },
+          {
+            "cache": false,
+            "executable": false,
+            "uri": "$KLIENT_URL"
+          },
+          {
+            "cache": false,
+            "executable": true,
+            "uri": "$ENTRYPOINT_URL/entrypoint.1.sh"
+          },
+          {
+            "cache": false,
+            "executable": true,
+            "uri": "$ENTRYPOINT_URL/entrypoint.2.sh"
+          },
+          {
+            "cache": false,
+            "executable": true,
+            "uri": "$ENTRYPOINT_URL/entrypoint.3.sh"
+          },
+          {
+            "cache": false,
+            "executable": true,
+            "uri": "$ENTRYPOINT_URL/entrypoint.4.sh"
+          },
+          {
+            "cache": false,
+            "executable": true,
+            "uri": "$ENTRYPOINT_URL/entrypoint.5.sh"
+          },
+          {
+            "cache": false,
+            "executable": true,
+            "uri": "$ENTRYPOINT_URL/entrypoint.6.sh"
+          },
+          {
+            "cache": false,
+            "executable": true,
+            "uri": "$ENTRYPOINT_URL/entrypoint.7.sh"
+          },
+          {
+            "cache": false,
+            "executable": true,
+            "uri": "$ENTRYPOINT_URL/entrypoint.8.sh"
+          },
+          {
+            "cache": false,
+            "executable": true,
+            "uri": "$ENTRYPOINT_URL/entrypoint.9.sh"
+          }
+        ],
+        "mem": 128,
+        "ports": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    }
+  }
+}

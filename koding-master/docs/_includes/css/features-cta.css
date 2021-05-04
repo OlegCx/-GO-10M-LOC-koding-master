@@ -1,0 +1,37 @@
+.FeatureCTA {
+  background: #2a3446;
+  background: -moz-linear-gradient(-45deg,  #2a3446 0%, #62476b 100%);
+  background: -webkit-linear-gradient(-45deg,  #2a3446 0%,#62476b 100%);
+  background: linear-gradient(135deg,  #2a3446 0%,#62476b 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2a3446', endColorstr='#62476b',GradientType=1 );
+  padding: 70px 15px;
+  text-align: center;
+}
+.FeatureCTA p {
+  color: white;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: "fira-sans", "proxima-nova", Helvetica, Arial, sans-serif;
+  font-size: 32px;
+  font-weight: 300;
+  max-width: 700px;
+  line-height: 1.2;
+}
+.FeatureCTA a {
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+  background-color: #F2778A;
+  padding: 15px 34px;
+  font-family: "proxima-nova", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  display: inline-block;
+  border-radius: 3px;
+  letter-spacing: 1px;
+  margin-top: 25px;
+}
+@media (max-width: 767px) {
+  .FeatureCTA p {
+    font-size: 24px;
+  }
+}

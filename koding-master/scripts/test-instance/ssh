@@ -1,0 +1,14 @@
+#!/bin/bash
+
+cd $(dirname $0)/../..
+
+declare host=$1
+declare identity_file=$KONFIG_PROJECTROOT/scripts/test-instance/koding-test-instances-2015-06.pem
+declare user=ubuntu
+
+# Discard positional parameter $1 to pass rest to `ssh` command
+shift
+
+declare ssh_options="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+
+ssh $ssh_options -i $identity_file -l $user $host "$@"

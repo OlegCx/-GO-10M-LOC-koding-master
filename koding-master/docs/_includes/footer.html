@@ -1,0 +1,51 @@
+<style>{% include css/footer.css %}</style>
+
+<footer class="Homepage-Footer">
+  <figure class="Homepage-Footer--logo"></figure>
+  <div class="container">
+    <div class="Footer--col">
+      <h3>For Teams</h3>
+      <ul>
+        <li><a href="{{ site.url }}/verticals/training">Platform for Training</a></li>
+        <li><a href="{{ site.url }}/verticals/trial">Pre-Sales Automation</a></li>
+      </ul>
+    </div>
+    <div class="Footer--col">
+      <h3>Resources</h3>
+      <ul>
+        <li><a href="{{ site.url }}/docs/home">Documentation</a></li>
+        <li><a href="{{ site.url }}/blog">Blog</a></li>
+        <li><a href="{{ site.url }}/docs/creating-an-aws-stack">Get Started</a></li>
+      </ul>
+    </div>
+    <div class="Footer--col">
+      <h3>About</h3>
+      <ul>
+        <li><a href="{{ site.url }}/about">About Us</a></li>
+        <li><a href="https://github.com/koding" target='_blank'>Open Source</a></li>
+      </ul>
+    </div>
+    <div class="Footer--col">
+      <h3>Contact</h3>
+      <ul>
+        <li><a href="http://facebook.com/koding" target='_blank'>Facebook</a></li>
+        <li><a href="http://twitter.com/koding" target='_blank'>Twitter</a></li>
+        <li><a href="http://linkedin.com/company/koding" target='_blank'>LinkedIn</a></li>
+        <li><a href="mailto:support@koding.com">Email Us</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script type="text/javascript" src="{{ site.url }}/js/form-submission.js" /></script>
+<script type="text/javascript">
+  // footer mobile menu expand/collaps
+  $('.Footer--col h3').on('click', function(){
+    var wasActive = $(this).parent().hasClass('active');
+    $('.Footer--col').removeClass('active');
+    if(!wasActive)
+      $(this).parent().addClass('active');
+  });
+</script>
+<script type="text/javascript" src="{{ site.url }}/js/requests.js" /></script>
+{% include analytics.html %}
